@@ -46,5 +46,6 @@ public class User {
 
     @JsonIgnore
     boolean active;
+
 }
 
