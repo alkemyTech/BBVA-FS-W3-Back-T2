@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -38,12 +38,9 @@ public class Transaction {
     @UpdateTimestamp
     LocalDateTime updatedDate;
 
-    /*...
-    TO DO: agregar clase account para completar la relación.
-
-    *  @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-    * */
+
 }
 
