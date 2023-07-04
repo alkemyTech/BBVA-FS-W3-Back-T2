@@ -46,7 +46,7 @@ public class User {
     private LocalDateTime updatedDate;
 
     @JsonIgnore
-    private boolean active;
+    private boolean softDelete;
 
 }
 
