@@ -22,16 +22,17 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    String firstName;
+    private String firstName;
 
     @Column(nullable = false)
-    String lastName;
+    private String lastName;
 
     @Column(nullable = false, unique = true)
-    String email;
+    private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
-    String password;
+    private String password;
 
     @ManyToOne
     @JsonIgnore
@@ -39,13 +40,13 @@ public class User {
     private Role roleId;
 
     @CreationTimestamp
-    LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @UpdateTimestamp
-    LocalDateTime updatedDate;
+    private LocalDateTime updatedDate;
 
     @JsonIgnore
-    boolean active;
+    private boolean active;
 
 }
 
