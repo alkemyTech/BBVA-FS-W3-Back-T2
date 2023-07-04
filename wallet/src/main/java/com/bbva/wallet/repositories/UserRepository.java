@@ -1,9 +1,10 @@
 package com.bbva.wallet.repositories;
 
-import com.bbva.wallet.entities.Role;
+import com.bbva.wallet.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<Role, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 }
+
