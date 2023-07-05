@@ -1,15 +1,34 @@
 {
 	"info": {
-		"_postman_id": "c64cc564-6979-433d-8fd6-8b292d81de0e",
+		"_postman_id": "75d16644-65ed-480d-9003-38e34c22bcd9",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "3286645"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23524429"
 	},
 	"item": [
 		{
 			"name": "/auth",
-			"item": []
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Rodrigo\",\n    \"lastName\": \"Juarez\",\n    \"password\": \"pass\",\n    \"email\": \"rodri@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/auth/register"
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "/users",
