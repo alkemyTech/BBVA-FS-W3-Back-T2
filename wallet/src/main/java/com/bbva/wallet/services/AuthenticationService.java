@@ -1,6 +1,8 @@
 package com.bbva.wallet.services;
 
+import com.bbva.wallet.dtos.JwtAuthenticationResponse;
 import com.bbva.wallet.dtos.RegisterRequest;
+import com.bbva.wallet.dtos.SignInRequest;
 import com.bbva.wallet.entities.Role;
 import com.bbva.wallet.enums.RoleName;
 import com.bbva.wallet.enums.Currency;
@@ -12,8 +14,11 @@ import com.bbva.wallet.repositories.UserRepository;
 import com.bbva.wallet.utils.CbuUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 
 @Service
@@ -21,9 +26,11 @@ import java.util.List;
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final JwtService jwtService;
     private final AccountService accountService;
     private final UserService userService;
     private final RoleService roleService;
+    private final AuthenticationManager authenticationManager;
 
     public User signUp(@Valid RegisterRequest request) {
         if (validateEmail(request.getEmail())) {
@@ -51,6 +58,13 @@ public class AuthenticationService {
         }
 
         throw new DuplicateEmailException("El correo electrónico ya está registrado", request.getEmail());
+    }
+
+    public JwtAuthenticationResponse signIn(SignInRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Mail o contraseña inválida."));
+        String jwt = jwtService.generateToken(user);
+        return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
     private boolean validateEmail(String email) {
