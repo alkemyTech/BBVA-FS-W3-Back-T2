@@ -1,5 +1,4 @@
 package com.bbva.wallet.entities;
-
 import com.bbva.wallet.enums.Currency;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
