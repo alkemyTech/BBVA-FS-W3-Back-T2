@@ -20,7 +20,7 @@ public class AuthenticationController {
     public ResponseEntity<User> signup(@RequestBody @Valid RegisterRequest request) {
         User user = authenticationService.signUp(request);
         return ResponseEntity
-                .created(URI.create("/api/students/" + user.getId()))
+                .created(URI.create("/api/user/" + user.getId()))
                 .body(user);
     }
 
