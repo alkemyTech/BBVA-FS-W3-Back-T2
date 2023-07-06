@@ -15,7 +15,10 @@ import com.bbva.wallet.utils.CbuUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.naming.AuthenticationException;
@@ -60,9 +63,21 @@ public class AuthenticationService {
         throw new DuplicateEmailException("El correo electrónico ya está registrado", request.getEmail());
     }
 
-    public JwtAuthenticationResponse signIn(SignInRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Mail o contraseña inválida."));
+    public JwtAuthenticationResponse signIn(SignInRequest request) throws AuthenticationException {
+        String email = request.getEmail();
+        String password = request.getPassword();
+        Authentication authentication;
+
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password));
+        } catch (BadCredentialsException ex) {
+            throw new AuthenticationException("Correo electrónico o contraseña inválida");
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User user = (User) authentication.getPrincipal();
         String jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }

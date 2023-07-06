@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import java.net.URI;
 
 @RestController
@@ -27,7 +28,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest request) {
+    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest request) throws AuthenticationException {
         return ResponseEntity.ok(authenticationService.signIn(request));
     }
 

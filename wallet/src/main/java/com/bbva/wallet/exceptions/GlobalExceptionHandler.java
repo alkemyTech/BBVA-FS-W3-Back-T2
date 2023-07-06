@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.naming.AuthenticationException;
 import java.util.Objects;
 
 @RestControllerAdvice
@@ -32,6 +33,15 @@ public class GlobalExceptionHandler {
         response.setMessage(ex.getMessage());
         response.setData(ex.getDuplicateEmail());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Response<String>> handleAuthenticationException(AuthenticationException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.FAILED_AUTHENTICATION);
+        response.setMessage(ex.getMessage());
+        response.setData("error de autenticación");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
 }
