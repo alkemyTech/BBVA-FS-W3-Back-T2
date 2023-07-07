@@ -3,6 +3,7 @@ package com.bbva.wallet.controllers;
 import com.bbva.wallet.dtos.JwtAuthenticationResponse;
 import com.bbva.wallet.dtos.RegisterRequest;
 import com.bbva.wallet.dtos.SignInRequest;
+import com.bbva.wallet.dtos.SignInResponse;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.services.AuthenticationService;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest request) throws AuthenticationException {
+    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest request) throws AuthenticationException {
         return ResponseEntity.ok(authenticationService.signIn(request));
     }
 
