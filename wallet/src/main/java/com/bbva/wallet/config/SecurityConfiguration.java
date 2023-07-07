@@ -54,6 +54,7 @@ public class SecurityConfiguration {
                                         "/v3/api-docs/**")
                                 .permitAll()
                                 .requestMatchers("/api/**").hasAuthority(RoleName.USER.name())
+                                .requestMatchers("/users").hasAuthority(RoleName.ADMIN.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

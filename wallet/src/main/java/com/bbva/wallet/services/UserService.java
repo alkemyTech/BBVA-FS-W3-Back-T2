@@ -8,6 +8,7 @@ import com.bbva.wallet.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import java.time.LocalDateTime;
 
@@ -30,4 +31,9 @@ public class UserService {
                 .softDelete(false)
                 .build();
     }
+
+    public List<User> findAllUsers(){
+        return userRepository.findAll();
+    }
+
 }

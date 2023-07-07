@@ -1,10 +1,12 @@
 {
 	"info": {
-		"_postman_id": "75d16644-65ed-480d-9003-38e34c22bcd9",
+
+		"_postman_id": "857447db-e759-4db3-9bac-25634bcd17c6",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "23524429"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24928275"
+
 	},
 	"item": [
 		{
@@ -53,7 +55,27 @@
 		},
 		{
 			"name": "/users",
-			"item": []
+			"item": [
+				{
+					"name": "Obtener todos los usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "/accounts",
