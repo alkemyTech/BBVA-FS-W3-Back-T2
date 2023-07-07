@@ -1,6 +1,9 @@
 package com.bbva.wallet.services;
 
+import com.bbva.wallet.dtos.JwtAuthenticationResponse;
 import com.bbva.wallet.dtos.RegisterRequest;
+import com.bbva.wallet.dtos.SignInRequest;
+import com.bbva.wallet.dtos.SignInResponse;
 import com.bbva.wallet.entities.Role;
 import com.bbva.wallet.enums.RoleName;
 import com.bbva.wallet.enums.Currency;
@@ -12,8 +15,14 @@ import com.bbva.wallet.repositories.UserRepository;
 import com.bbva.wallet.utils.CbuUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 
 @Service
@@ -21,9 +30,11 @@ import java.util.List;
 public class AuthenticationService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final JwtService jwtService;
     private final AccountService accountService;
     private final UserService userService;
     private final RoleService roleService;
+    private final AuthenticationManager authenticationManager;
 
     public User signUp(@Valid RegisterRequest request) {
         if (validateEmail(request.getEmail())) {
@@ -51,6 +62,25 @@ public class AuthenticationService {
         }
 
         throw new DuplicateEmailException("El correo electrónico ya está registrado", request.getEmail());
+    }
+
+    public SignInResponse signIn(SignInRequest request) throws AuthenticationException {
+        String email = request.getEmail();
+        String password = request.getPassword();
+        Authentication authentication;
+
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password));
+        } catch (BadCredentialsException ex) {
+            throw new AuthenticationException("Correo electrónico o contraseña inválida");
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User user = (User) authentication.getPrincipal();
+        String jwt = jwtService.generateToken(user);
+        return SignInResponse.builder().user(user).jwt(jwt).build();
     }
 
     private boolean validateEmail(String email) {
