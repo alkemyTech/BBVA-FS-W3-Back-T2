@@ -3,6 +3,7 @@ package com.bbva.wallet.services;
 import com.bbva.wallet.dtos.JwtAuthenticationResponse;
 import com.bbva.wallet.dtos.RegisterRequest;
 import com.bbva.wallet.dtos.SignInRequest;
+import com.bbva.wallet.dtos.SignInResponse;
 import com.bbva.wallet.entities.Role;
 import com.bbva.wallet.enums.RoleName;
 import com.bbva.wallet.enums.Currency;
@@ -64,7 +65,7 @@ public class AuthenticationService {
         throw new DuplicateEmailException("El correo electrónico ya está registrado", request.getEmail());
     }
 
-    public JwtAuthenticationResponse signIn(SignInRequest request) throws AuthenticationException {
+    public SignInResponse signIn(SignInRequest request) throws AuthenticationException {
         String email = request.getEmail();
         String password = request.getPassword();
         Authentication authentication;
@@ -80,7 +81,7 @@ public class AuthenticationService {
 
         User user = (User) authentication.getPrincipal();
         String jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        return SignInResponse.builder().user(user).jwt(jwt).build();
     }
 
     private boolean validateEmail(String email) {

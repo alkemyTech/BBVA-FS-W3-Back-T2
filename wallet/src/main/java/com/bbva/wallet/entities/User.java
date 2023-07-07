@@ -45,9 +45,11 @@ public class User implements UserDetails {
     private Role roleId;
 
     @CreationTimestamp
+    @JsonIgnore
     private LocalDateTime creationDate;
 
     @UpdateTimestamp
+    @JsonIgnore
     private LocalDateTime updatedDate;
 
     @JsonIgnore
