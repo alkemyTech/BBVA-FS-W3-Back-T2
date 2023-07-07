@@ -3,18 +3,34 @@ package com.bbva.wallet.services;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
+import com.bbva.wallet.dtos.RegisterRequest;
+import com.bbva.wallet.entities.Role;
+import com.bbva.wallet.repositories.RoleRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public User buildUser(RegisterRequest request, Role userRole) {
+        return User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .roleId(userRole)
+                .creationDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
+                .softDelete(false)
+                .build();
     }
 
     public User userSoftDelete(Long id) {
