@@ -10,19 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("accounts")
+@RequestMapping("/accounts")
 public class AccountController {
 
     private final AccountService accountService;
-
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     public List<Account> findAccountsByUser (@PathVariable Long userId){
         return accountService.findAccountsByUser(userId);
     }
-
 
 }
