@@ -39,9 +39,11 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role roleId;
 
+    @JsonIgnore
     @CreationTimestamp
     private LocalDateTime creationDate;
 
+    @JsonIgnore
     @UpdateTimestamp
     private LocalDateTime updatedDate;
 
