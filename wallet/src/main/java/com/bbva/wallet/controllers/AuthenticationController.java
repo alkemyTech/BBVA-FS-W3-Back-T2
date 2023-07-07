@@ -20,11 +20,9 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> signup(@RequestBody @Valid RegisterRequest request) {
-        User user = authenticationService.signUp(request);
-        return ResponseEntity
-                .created(URI.create("/api/users/" + user.getId()))
-                .body(user);
+    public ResponseEntity<JwtAuthenticationResponse> signup(@RequestBody @Valid RegisterRequest request) {
+        return ResponseEntity.ok(authenticationService.signUp(request));
+
     }
 
     @PostMapping("/login")
