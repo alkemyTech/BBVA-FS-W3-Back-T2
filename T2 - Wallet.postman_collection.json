@@ -29,6 +29,27 @@
 						"url": "localhost:8080/auth/register"
 					},
 					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"rodri@mail.com\",\n    \"password\": \"pass\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/auth/login"
+					},
+					"response": []
 				}
 			]
 		},
@@ -58,7 +79,28 @@
 		},
 		{
 			"name": "/accounts",
-			"item": []
+			"item": [
+				{
+					"name": "Obtener Accounts de User según userId pasado por parámetro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/accounts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
