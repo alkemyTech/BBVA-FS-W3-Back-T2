@@ -36,7 +36,7 @@ public class AuthenticationService {
     private final RoleService roleService;
     private final AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationResponse signUp(@Valid RegisterRequest request) {
+    public SignInResponse signUp(@Valid RegisterRequest request) {
         if (validateEmail(request.getEmail())) {
             Role userRole = roleService.getOrCreateUserRole(RoleName.USER);
             User user = userService.buildUser(request, userRole);
@@ -59,7 +59,7 @@ public class AuthenticationService {
             accountRepository.saveAll(List.of(arsAccount, usdAccount));
 
             var jwt = jwtService.generateToken(user);
-            return JwtAuthenticationResponse.builder().token(jwt).build();
+            return SignInResponse.builder().user(user).jwt(jwt).build();
         }
 
         throw new DuplicateEmailException("El correo electrónico ya está registrado", request.getEmail());
