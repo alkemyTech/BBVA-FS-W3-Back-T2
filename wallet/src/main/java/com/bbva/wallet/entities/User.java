@@ -44,12 +44,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private Role roleId;
 
-    @JsonIgnore
     @CreationTimestamp
     @JsonIgnore
     private LocalDateTime creationDate;
 
-    @JsonIgnore
     @UpdateTimestamp
     @JsonIgnore
     private LocalDateTime updatedDate;
