@@ -11,5 +11,4 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
     List<Account> findByUser(User user);
-
 }
