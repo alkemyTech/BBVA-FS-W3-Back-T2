@@ -21,11 +21,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> signup(@RequestBody @Valid RegisterRequest request) {
-        User user = authenticationService.signUp(request);
+    public ResponseEntity<SignInResponse> signup(@RequestBody @Valid RegisterRequest request) {
+        SignInResponse signInResponse = authenticationService.signUp(request);
+
         return ResponseEntity
-                .created(URI.create("/users/" + user.getId()))
-                .body(user);
+                .created(URI.create("/users" + signInResponse.getUser().getId()))
+                .body(signInResponse);
     }
 
     @PostMapping("/login")
