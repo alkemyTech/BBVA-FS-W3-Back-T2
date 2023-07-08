@@ -11,6 +11,7 @@ import com.bbva.wallet.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
+import java.util.List;
 import java.time.LocalDateTime;
 
 @Service
@@ -45,6 +46,10 @@ public class UserService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el usuario");
         }
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
 }
