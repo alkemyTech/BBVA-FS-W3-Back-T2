@@ -39,7 +39,6 @@ public class UserService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setSoftDelete(true);
-            userRepository.deleteById(id);
             userRepository.save(user);
 
             return user;
@@ -47,4 +46,5 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el usuario");
         }
     }
+
 }
