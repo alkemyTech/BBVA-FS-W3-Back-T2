@@ -1,15 +1,17 @@
 package com.bbva.wallet.services;
 
+import com.bbva.wallet.entities.User;
+import com.bbva.wallet.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import com.bbva.wallet.dtos.RegisterRequest;
 import com.bbva.wallet.entities.Role;
-import com.bbva.wallet.entities.User;
 import com.bbva.wallet.repositories.RoleRepository;
-import com.bbva.wallet.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 import java.util.List;
-
 import java.time.LocalDateTime;
 
 @Service
@@ -32,7 +34,21 @@ public class UserService {
                 .build();
     }
 
-    public List<User> findAllUsers(){
+    public User userSoftDelete(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setSoftDelete(true);
+            userRepository.save(user);
+
+            return user;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el usuario");
+        }
+    }
+
+    public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 
