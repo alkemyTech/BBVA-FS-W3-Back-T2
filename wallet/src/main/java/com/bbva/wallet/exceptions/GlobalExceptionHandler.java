@@ -44,4 +44,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    @ExceptionHandler(DeletedUserException.class)
+    public ResponseEntity<Response<String>> handleAuthenticationException(DeletedUserException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.DELETED_USER);
+        response.setMessage(ex.getMessage());
+        response.setData(ex.getDeletedUser());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
 }
