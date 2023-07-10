@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 public class AccountsBalance {
-    AccountBalance accountArs;
-    AccountBalance accountUsd;
-    List<TransactionHistory> history;
-    List<FixedTermDeposit> fixedTerms;
+    private AccountBalance accountArs;
+    private AccountBalance accountUsd;
+    private List<TransactionHistory> history;
+    private List<FixedTermDeposit> fixedTerms;
 }

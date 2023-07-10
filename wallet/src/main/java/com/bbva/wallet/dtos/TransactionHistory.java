@@ -11,6 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 public class TransactionHistory {
-    Currency currency;
-    List<TransactionDto> transactions;
+    private Currency currency;
+    private List<TransactionDto> transactions;
 }
