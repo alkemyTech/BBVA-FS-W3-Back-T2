@@ -1,4 +1,4 @@
-package com.bbva.wallet.controller;
+package com.bbva.wallet.controllers;
 
 import com.bbva.wallet.repositories.UserRepository;
 import com.bbva.wallet.utils.JwtUtil;
@@ -18,6 +18,5 @@ public class JwtMock {
         var user  = userRepository.findById(userID);
         return JwtUtil.generateToken(user.get());
     }
-
 
 }

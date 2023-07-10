@@ -1,6 +1,5 @@
-package com.bbva.wallet.dto;
+package com.bbva.wallet.dtos;
 
-import com.bbva.wallet.enums.TransactionType;
 import lombok.Data;
 
 @Data
