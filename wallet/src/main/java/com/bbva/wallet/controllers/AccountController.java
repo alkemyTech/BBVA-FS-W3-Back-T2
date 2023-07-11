@@ -27,7 +27,7 @@ public class AccountController {
     }
 
     @GetMapping("/balance")
-    public AccountsBalance hello(Authentication authentication) {
+    public AccountsBalance getBalance(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return accountService.getAccountsBalance(user);
     }
