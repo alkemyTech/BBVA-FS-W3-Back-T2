@@ -44,4 +44,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Response<String>> handleUserNotFoundException(UserNotFoundException ex) {
+        Response<String> response = new Response<>();
+        String errorMessage = ex.getMessage();
+        response.addError(ErrorCodes.USER_NOT_FOUND);
+        response.setMessage(errorMessage);
+        response.setData("Error con user id " + ex.getUserId());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
 }

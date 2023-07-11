@@ -7,6 +7,7 @@ import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.TransactionType;
+import com.bbva.wallet.exceptions.UserNotFoundException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
@@ -73,7 +74,7 @@ public class DepositService{
         if (accounts.size() == 1) {
             return accounts.get(0);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El usuario no tiene una cuenta en " + currency);
+            throw new UserNotFoundException("El usuario no tiene una cuenta en " + currency, user.getId());
         }
 
     }
