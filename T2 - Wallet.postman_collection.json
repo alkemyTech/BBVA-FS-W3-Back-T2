@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "857447db-e759-4db3-9bac-25634bcd17c6",
+		"_postman_id": "47b59c35-5e14-4c25-9342-c0adde471288",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -113,6 +113,50 @@
 							"path": [
 								"accounts",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/transactions",
+			"item": [
+				{
+					"name": "Realizar un depósito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/deposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"deposit"
 							]
 						}
 					},
