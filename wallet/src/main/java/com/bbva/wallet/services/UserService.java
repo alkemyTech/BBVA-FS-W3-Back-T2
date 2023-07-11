@@ -64,7 +64,7 @@ public class UserService {
             if (!updateUser.getLastName().isEmpty()) {
                 updatedUser.setLastName(updateUser.getLastName());
             }
-            if (!updatedUser.getPassword().isEmpty()) {
+            if (!updateUser.getPassword().isEmpty()) {
                 updatedUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
             }
             return userRepository.save(updatedUser);
