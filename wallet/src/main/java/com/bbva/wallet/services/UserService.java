@@ -58,9 +58,15 @@ public class UserService {
         Optional<User> userOptional  = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User updatedUser = userOptional.get();
-            updatedUser.setFirstName(updateUser.getFirstName());
-            updatedUser.setLastName(updateUser.getLastName());
-            updatedUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+            if (!updateUser.getFirstName().isEmpty()) {
+                updatedUser.setFirstName(updateUser.getFirstName());
+            }
+            if (!updateUser.getLastName().isEmpty()) {
+                updatedUser.setLastName(updateUser.getLastName());
+            }
+            if (!updatedUser.getPassword().isEmpty()) {
+                updatedUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+            }
             return userRepository.save(updatedUser);
         } else {
             throw new UserNotFoundException("No se ha encontrado al usuario", id);
