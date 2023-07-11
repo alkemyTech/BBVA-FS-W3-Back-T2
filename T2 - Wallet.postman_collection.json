@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4de2f813-eac2-4605-a27d-42a385f8be0f",
+		"_postman_id": "1ec34b3c-32d6-4e5b-bbef-71bc2bc6b1c3",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
@@ -90,7 +90,8 @@
 					"name": "Obtener balance de cuenta",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "localhost:8080/accounts/balance"
 					},
 					"response": []
 				}
