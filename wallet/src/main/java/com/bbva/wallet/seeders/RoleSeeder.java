@@ -25,7 +25,6 @@ public class RoleSeeder implements CommandLineRunner {
             Role adminRole = Role.builder().name(RoleName.ADMIN).description("Admin").build();
             roleRepository.saveAll(List.of(userRole, adminRole));
         }
-        System.out.println(roleRepository.count());
     }
 
 }
