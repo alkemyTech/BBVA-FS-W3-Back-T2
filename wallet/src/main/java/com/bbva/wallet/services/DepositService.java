@@ -55,8 +55,6 @@ public class DepositService{
         Transaction depositTransaction = Transaction.builder()
                 .name(TransactionType.DEPOSIT)
                 .amount(depositRequest.getAmount())
-                .creationDate(LocalDateTime.now())
-                .updatedDate(LocalDateTime.now())
                 .account(cuenta)
                 .build();
         transactionRepository.save(depositTransaction);
