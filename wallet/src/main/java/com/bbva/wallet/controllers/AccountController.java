@@ -1,11 +1,13 @@
 package com.bbva.wallet.controllers;
 
+import com.bbva.wallet.dtos.UpdateAccount;
 import com.bbva.wallet.entities.Account;
+import com.bbva.wallet.entities.User;
 import com.bbva.wallet.services.AccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +23,12 @@ public class AccountController {
     @GetMapping("/{userId}")
     public List<Account> findAccountsByUser (@PathVariable Long userId){
         return accountService.findAccountsByUser(userId);
+    }
+
+    @PatchMapping("/{accountId}")
+    public ResponseEntity<Account> updateAccount(@PathVariable String accountId, @RequestBody @Valid UpdateAccount updateAccount, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(accountService.updateAccount(user, accountId, updateAccount));
     }
 
 }

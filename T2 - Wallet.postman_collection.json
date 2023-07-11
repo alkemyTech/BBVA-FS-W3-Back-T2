@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "857447db-e759-4db3-9bac-25634bcd17c6",
+		"_postman_id": "68101844-d615-4bc0-967b-708c6ec738a5",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24928275"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23524429"
 	},
 	"item": [
 		{
@@ -59,18 +59,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/users/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users",
-								"3"
-							]
-						}
+						"url": "http://localhost:8080/users/3"
 					},
 					"response": []
 				},
@@ -79,17 +68,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users"
-							]
-						}
+						"url": "http://localhost:8080/users"
 					},
 					"response": []
 				}
@@ -103,18 +82,25 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/accounts/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"accounts",
-								"1"
-							]
-						}
+						"url": "http://localhost:8080/accounts/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar una cuenta",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionLimit\": 350000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/accounts/1234567890123456789012"
 					},
 					"response": []
 				}

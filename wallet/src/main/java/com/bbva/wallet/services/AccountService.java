@@ -1,7 +1,11 @@
 package com.bbva.wallet.services;
 
+import com.bbva.wallet.dtos.UpdateAccount;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.User;
+import com.bbva.wallet.exceptions.InexistentAccountException;
+import com.bbva.wallet.exceptions.NoUserAccountsException;
+import com.bbva.wallet.exceptions.UserAccountMismatchException;
 import com.bbva.wallet.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -39,6 +43,28 @@ public class AccountService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
         }
+    }
+
+    public Account updateAccount(User user, String accountId, UpdateAccount updateAccount) {
+        List<Account> userAccounts = accountRepository.findByUser(user);
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+
+        if (userAccounts.isEmpty()) {
+            throw new NoUserAccountsException("No se encontraron cuentas para el usuario");
+        }
+
+        if (optionalAccount.isEmpty()) {
+            throw new InexistentAccountException("No se encontró una cuenta con el ID especificado", accountId);
+        }
+
+        Account account = optionalAccount.get();
+
+        if (!userAccounts.contains(account)) {
+            throw new UserAccountMismatchException("La cuenta no pertenece al usuario especificado", accountId);
+        }
+
+        account.setTransactionLimit(updateAccount.getTransactionLimit());
+        return accountRepository.save(account);
     }
 
 }
