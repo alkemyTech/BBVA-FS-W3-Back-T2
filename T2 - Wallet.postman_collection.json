@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c059279b-69f0-45e4-b296-9fa8b9a1f6c4",
+		"_postman_id": "e9696a2e-db21-445b-9b2a-14f0c09a50e8",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
@@ -67,7 +67,8 @@
 					"name": "Obtener detalle de usuario especificado en el endpoint",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "http://localhost:8080/users/1"
 					},
 					"response": []
 				},
