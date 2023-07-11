@@ -24,7 +24,7 @@ public class AccountService {
 
     public Account createAccount(User user, Currency currency) {
 
-        if (accountRepository.existsByUserAndCurrency(user, currency.name())) {
+        if (accountRepository.existsByUserAndCurrency(user, currency)) {
             throw new AccountCreationException("Ya existe una cuenta del mismo tipo para este usuario.");
         }
 

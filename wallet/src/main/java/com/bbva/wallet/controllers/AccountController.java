@@ -32,7 +32,6 @@ public class AccountController {
     public ResponseEntity<Account> createAccount(@RequestBody AccountCreationRequest request) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
 
         Account account = accountService.createAccount((User) authentication.getPrincipal(), request.getCurrency());
 
