@@ -7,9 +7,11 @@ import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.TransactionType;
+import com.bbva.wallet.exceptions.AccountNotFoundException;
+import com.bbva.wallet.exceptions.InsufficientFundsException;
 import com.bbva.wallet.repositories.AccountRepository;
+import com.bbva.wallet.repositories.TransactionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TransactionService {
     private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
 
     public Transaction buildTransaction(Account account, Double amount, TransactionType transactionType, String description) {
         return Transaction.builder()
@@ -32,15 +35,19 @@ public class TransactionService {
         Double amount = payment.getAmount();
         Currency currency = payment.getCurrency();
         PaymentRegister paymentRegister = new PaymentRegister();
-        Optional<Account> accountOptional = accountRepository.findByUserAndCurrency(user, currency);
-        if (accountOptional.isPresent() && accountOptional.get().getBalance() >= amount) {
-            Account account = accountOptional.get();
-            Transaction transaction = buildTransaction(account, amount, TransactionType.PAYMENT, "Payment");
-            account.setBalance(account.getBalance() - amount);
-            paymentRegister.setTransaction(transaction);
-            paymentRegister.setAccount(account);
-        } else {
-            System.out.println("Todo mal.");
+        Optional<Account> optionalAccount = accountRepository.findByUserAndCurrency(user, currency);
+        optionalAccount.ifPresent(account -> {
+            if (account.getBalance() >= amount) {
+                Transaction transaction = buildTransaction(account, amount, TransactionType.PAYMENT, "Payment");
+                account.setBalance(account.getBalance() - amount);
+                paymentRegister.setTransaction(transactionRepository.save(transaction));
+                paymentRegister.setAccount(account);
+            } else {
+                throw new InsufficientFundsException("Fondos insuficientes");
+            }
+        });
+        if (optionalAccount.isEmpty()) {
+            throw new AccountNotFoundException("No se ha encontrado una cuenta en la moneda indicada", currency);
         }
         return paymentRegister;
     }

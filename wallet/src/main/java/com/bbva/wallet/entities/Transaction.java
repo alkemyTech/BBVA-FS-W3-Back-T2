@@ -1,6 +1,7 @@
 package com.bbva.wallet.entities;
 
 import com.bbva.wallet.enums.TransactionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,12 +31,15 @@ public class Transaction {
 
     String description;
 
+    @JsonIgnore
     @CreationTimestamp
     LocalDateTime creationDate;
 
+    @JsonIgnore
     @UpdateTimestamp
     LocalDateTime updatedDate;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;

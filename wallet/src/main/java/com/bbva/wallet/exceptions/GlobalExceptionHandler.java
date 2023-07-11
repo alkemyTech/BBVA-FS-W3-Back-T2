@@ -44,4 +44,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<Response<String>> handleAccountNotFoundException(AccountNotFoundException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.ACCOUNT_NOT_FOUND);
+        response.setMessage(ex.getMessage());
+        response.setData(String.valueOf(ex.getCurrency()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(InsufficientFundsException.class)
+    public ResponseEntity<Response<String>> handleInsufficientFundsException(InsufficientFundsException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INSUFFICIENT_FUNDS);
+        response.setMessage(ex.getMessage());
+        response.setData("account balance");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
 }
