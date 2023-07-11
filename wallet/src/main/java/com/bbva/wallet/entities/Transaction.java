@@ -1,8 +1,11 @@
 package com.bbva.wallet.entities;
 
-import com.bbva.wallet.enums.RoleName;
+import com.bbva.wallet.enums.TransactionType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,17 +16,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
-@Table(name = "roles")
-public class Role {
+@Table(name = "transactions")
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
+    double amount;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    RoleName name;
+    TransactionType name;
 
     String description;
 
@@ -32,4 +37,10 @@ public class Role {
 
     @UpdateTimestamp
     LocalDateTime updatedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
 }
+

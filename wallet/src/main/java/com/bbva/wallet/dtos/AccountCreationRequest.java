@@ -1,15 +1,15 @@
 package com.bbva.wallet.dtos;
 
 import com.bbva.wallet.enums.Currency;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class AccountCreationRequest {
-    @NotBlank(message = "Debe indicar el tipo de moneda para la cuenta")
     private Currency currency;
 }
