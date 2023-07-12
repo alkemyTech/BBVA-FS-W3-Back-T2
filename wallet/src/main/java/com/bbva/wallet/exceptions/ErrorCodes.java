@@ -6,3 +6,4 @@ public enum ErrorCodes {
     FAILED_AUTHENTICATION,
     DELETED_USER
 }
+
