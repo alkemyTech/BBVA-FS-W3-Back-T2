@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @AllArgsConstructor
@@ -36,9 +37,9 @@ public class Transaction {
     @UpdateTimestamp
     LocalDateTime updatedDate;
 
+    // no deberia estar las 2 cuentas en la clase, voy a suponer que esta es la cuenta receptora
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-
 }
 
