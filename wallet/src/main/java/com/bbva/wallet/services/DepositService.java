@@ -62,13 +62,11 @@ public class DepositService{
 
         User user = userRepository.findByEmail(emailUser).get();
         List<Account> userAccounts= accountService.findAccountsByUser(user.getId());
-        List<Account> accounts = userAccounts.stream().filter(c-> c.getCurrency() == currency).collect(Collectors.toList());
 
-        if (accounts.size() == 1) {
-            return accounts.get(0);
-        } else {
-            throw new AccountNotFoundException("El usuario no tiene una cuenta en " + currency, user.getId());
-        }
+        return userAccounts.stream()
+                .filter(c -> c.getCurrency() == currency && !c.isSoftDelete())
+                .findAny()
+                .orElseThrow(() -> new AccountNotFoundException("El usuario no tiene una cuenta en " + currency, user.getId()));
 
     }
 
