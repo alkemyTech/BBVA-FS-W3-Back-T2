@@ -44,4 +44,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    @ExceptionHandler(NonexistentTransactionException.class)
+    public ResponseEntity<Response<String>> handleNonexistentTransactionException(NonexistentTransactionException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.TRANSACTION_NOT_FOUND);
+        response.setMessage(ex.getMessage());
+        response.setData("id: " + String.valueOf(ex.getTransactionId()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler(UserTransactionMismatchException.class)
+    public ResponseEntity<Response<String>> handleUserTransactionMismatchException(UserTransactionMismatchException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INVALID_VALUE);
+        response.setMessage(ex.getMessage());
+        response.setData("id: " + String.valueOf(ex.getTransactionId()));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
 }

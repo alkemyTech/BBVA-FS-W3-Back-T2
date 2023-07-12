@@ -1,9 +1,14 @@
 package com.bbva.wallet.services;
 
 import com.bbva.wallet.dtos.TransactionInputDto;
+import com.bbva.wallet.dtos.UpdateTransaction;
+import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.Transaction;
+import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.TransactionType;
+import com.bbva.wallet.exceptions.NonexistentTransactionException;
+import com.bbva.wallet.exceptions.UserTransactionMismatchException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
@@ -13,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -133,6 +140,24 @@ public class TransactionService {
         accountRepository.save(ReceiverAccount);
 
         return true;
+    }
+
+    public Transaction updateTransaction(User user, Long id, UpdateTransaction updateTransaction) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
+
+        if (optionalTransaction.isPresent()) {
+            Transaction transaction = optionalTransaction.get();
+
+            List<Account> accounts = accountRepository.findByUser(user);
+            if (!accounts.isEmpty() && accounts.contains(transaction.getAccount())) {
+                transaction.setDescription(updateTransaction.getDescription());
+                return transactionRepository.save(transaction);
+            } else {
+                throw new UserTransactionMismatchException("La transacción no pertenece al usuario", id);
+            }
+        } else {
+            throw new NonexistentTransactionException("No existen transacciones con el id especificado", id);
+        }
     }
 
 }

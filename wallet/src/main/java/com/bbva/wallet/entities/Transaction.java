@@ -1,6 +1,7 @@
 package com.bbva.wallet.entities;
 
 import com.bbva.wallet.enums.TransactionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,13 +34,16 @@ public class Transaction {
 
     String description;
 
+    @JsonIgnore
     @CreationTimestamp
     LocalDateTime creationDate;
 
+    @JsonIgnore
     @UpdateTimestamp
     LocalDateTime updatedDate;
 
     // no deberia estar las 2 cuentas en la clase, voy a suponer que esta es la cuenta receptora
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
