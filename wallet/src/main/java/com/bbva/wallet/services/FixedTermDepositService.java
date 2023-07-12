@@ -28,7 +28,7 @@ public class FixedTermDepositService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
-    @Value("${porcentaje.interes}")
+    @Value("${porcentaje.interes.fixed.term.deposit}")
     double porcentajeInteres;
 
     public FixedTermDepositService(FixedTermDepositRepository fixedTermDepositRepository, AccountRepository accountRepository, JwtService jwtService, UserRepository userRepository) {
