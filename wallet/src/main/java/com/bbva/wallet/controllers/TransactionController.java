@@ -69,8 +69,10 @@ public class TransactionController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Transaction>>  getTransactionsById (@PathVariable Long userId){
-        return new ResponseEntity<>(this.transactionService.getTransactionsById(userId), HttpStatus.OK) ;
+    public ResponseEntity<List<Transaction>>  getTransactionsById (@PathVariable Long userId, @RequestHeader("Authorization") String token){
+        var jwt = token.substring(7);
+        var userEmail = jwtService.extractUserName(jwt);
+        return new ResponseEntity<>(this.transactionService.getTransactionsById(userId, userEmail), HttpStatus.OK) ;
     }
 
 
