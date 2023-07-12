@@ -7,22 +7,15 @@ import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.TransactionType;
-import com.bbva.wallet.exceptions.UserNotFoundException;
+import com.bbva.wallet.exceptions.AccountNotFoundException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,7 +67,7 @@ public class DepositService{
         if (accounts.size() == 1) {
             return accounts.get(0);
         } else {
-            throw new UserNotFoundException("El usuario no tiene una cuenta en " + currency, user.getId());
+            throw new AccountNotFoundException("El usuario no tiene una cuenta en " + currency, user.getId());
         }
 
     }

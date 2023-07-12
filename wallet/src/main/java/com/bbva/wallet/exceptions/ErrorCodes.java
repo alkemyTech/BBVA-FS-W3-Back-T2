@@ -4,6 +4,6 @@ public enum ErrorCodes {
     DUPLICATE_EMAIL,
     INVALID_VALUE,
     FAILED_AUTHENTICATION,
-    USER_NOT_FOUND
+    ACCOUNT_NOT_FOUND
 
 }

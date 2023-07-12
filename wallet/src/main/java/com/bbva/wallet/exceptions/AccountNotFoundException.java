@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserNotFoundException extends RuntimeException{
+public class AccountNotFoundException extends RuntimeException{
 
     private Long userId;
-    public UserNotFoundException(String message, Long id) {
+    public AccountNotFoundException(String message, Long id) {
         super(message);
         this.userId = id;
     }
