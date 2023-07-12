@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1ec34b3c-32d6-4e5b-bbef-71bc2bc6b1c3",
+		"_postman_id": "cab2a582-64e6-4828-9029-2da4875c139d",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "23524429"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21143328"
 	},
 	"item": [
 		{
@@ -24,7 +24,17 @@
 								}
 							}
 						},
-						"url": "localhost:8080/auth/register"
+						"url": {
+							"raw": "localhost:8080/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
@@ -45,7 +55,17 @@
 								}
 							}
 						},
-						"url": "localhost:8080/auth/login"
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				}
@@ -92,6 +112,69 @@
 						"method": "GET",
 						"header": [],
 						"url": "localhost:8080/accounts/balance"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/transactions",
+			"item": [
+				{
+					"name": "enviar  Usd",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/send_usd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"send_usd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "enviar Pesos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/send_ars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"send_ars"
+							]
+						}
 					},
 					"response": []
 				}
