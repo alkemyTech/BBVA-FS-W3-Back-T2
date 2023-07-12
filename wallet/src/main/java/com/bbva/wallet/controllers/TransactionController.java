@@ -4,6 +4,7 @@ import com.bbva.wallet.dtos.DepositRequest;
 import com.bbva.wallet.dtos.DepositResponse;
 import com.bbva.wallet.services.DepositService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,8 +73,8 @@ public class TransactionController {
     }
 
     @PostMapping("/deposit")
-    public DepositResponse deposit(@RequestBody @Valid DepositRequest depositRequest, HttpServletRequest request){
-        return (depositService.deposit(depositRequest, request));
+    public DepositResponse deposit(@RequestBody @Valid DepositRequest depositRequest, Authentication authentication){
+        return (depositService.deposit(depositRequest, authentication));
     }
 
 }

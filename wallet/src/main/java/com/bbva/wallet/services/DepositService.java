@@ -13,6 +13,7 @@ import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,13 +33,10 @@ public class DepositService{
 
     @Autowired
     private JwtService jwtService;
-    public DepositResponse deposit(DepositRequest depositRequest, HttpServletRequest request){
-        //conseguir mail
-        String authorizationHeader = request.getHeader("Authorization");
-        String emailUser = jwtService.extractUserName(authorizationHeader.substring(7));
-
-        //encontrar la cuenta
-        Account cuenta = findAccount(depositRequest.getCurrency(), emailUser);
+    public DepositResponse deposit(DepositRequest depositRequest, Authentication authentication){
+        //conseguir user y cuenta
+        User user = (User) authentication.getPrincipal();
+        Account cuenta = findAccount(depositRequest.getCurrency(), user.getEmail());
 
         //sumar el balance
         Double balance = cuenta.getBalance() + depositRequest.getAmount();
