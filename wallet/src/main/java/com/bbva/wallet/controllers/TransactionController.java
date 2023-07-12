@@ -2,13 +2,17 @@ package com.bbva.wallet.controllers;
 
 
 import com.bbva.wallet.dtos.TransactionInputDto;
+import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.services.TransactionService;
 import io.jsonwebtoken.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.bbva.wallet.services.JwtService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
@@ -62,6 +66,11 @@ public class TransactionController {
         }
 
 
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Transaction>>  getTransactionsById (@PathVariable Long userId){
+        return new ResponseEntity<>(this.transactionService.getTransactionsById(userId), HttpStatus.OK) ;
     }
 
 

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -135,4 +137,7 @@ public class TransactionService {
         return true;
     }
 
+    public List<Transaction> getTransactionsById(Long userId) {
+        return this.transactionRepository.getTransactionsById(userId);
+    }
 }

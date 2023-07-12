@@ -5,7 +5,8 @@ package com.bbva.wallet.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+ import org.springframework.http.HttpMethod;
+ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -58,7 +59,9 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers("/api/**").hasAuthority(RoleName.USER.name())
                                 .requestMatchers("/users").hasAuthority(RoleName.ADMIN.name())
-                                .requestMatchers("/transactions").hasAuthority(RoleName.USER.name())
+                                .requestMatchers("/transactions/send_ars").hasAuthority(RoleName.USER.name())
+                                .requestMatchers("/transactions/send_usd").hasAuthority(RoleName.USER.name())
+                                .requestMatchers(HttpMethod.GET,"/transactions/{userId}").hasAuthority(RoleName.ADMIN.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
