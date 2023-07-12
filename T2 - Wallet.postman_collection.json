@@ -79,7 +79,18 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:8080/users/3"
+						"url": {
+							"raw": "http://localhost:8080/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"3"
+							]
+						}
 					},
 					"response": []
 				},
@@ -88,7 +99,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users"
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				}
@@ -102,16 +123,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/accounts/1"
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener balance de cuenta",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "localhost:8080/accounts/balance"
+						"url": {
+							"raw": "http://localhost:8080/accounts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -120,124 +143,94 @@
 		{
 			"name": "/transactions",
 			"item": [
-			  {
-				"name": "Realizar un depósito",
-				"request": {
-				  "auth": {
-					"type": "bearer",
-					"bearer": [
-					  {
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
-						"type": "string"
-					  }
-					]
-				  },
-				  "method": "POST",
-				  "header": [],
-				  "body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10\r\n}",
-					"options": {
-					  "raw": {
-						"language": "json"
-					  }
-					}
-				  },
-				  "url": {
-					"raw": "http://localhost:8080/transactions/deposit",
-					"protocol": "http",
-					"host": [
-					  "localhost"
-					],
-					"port": "8080",
-					"path": [
-					  "transactions",
-					  "deposit"
-					]
-				  }
+				{
+					"name": "enviar  Usd",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/send_usd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"send_usd"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Enviar Dólares",
-				"request": {
-				  "auth": {
-					"type": "bearer",
-					"bearer": [
-					  {
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
-						"type": "string"
-					  }
-					]
-				  },
-				  "method": "POST",
-				  "header": [],
-				  "body": {
-					"mode": "raw",
-					"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
-					"options": {
-					  "raw": {
-						"language": "json"
-					  }
-					}
-				  },
-				  "url": {
-					"raw": "http://localhost:8080/transactions/send_usd",
-					"protocol": "http",
-					"host": [
-					  "localhost"
-					],
-					"port": "8080",
-					"path": [
-					  "transactions",
-					  "send_usd"
-					]
-				  }
+				{
+					"name": "enviar Pesos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/send_ars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"send_ars"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Enviar Pesos",
-				"request": {
-				  "auth": {
-					"type": "bearer",
-					"bearer": [
-					  {
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
-						"type": "string"
-					  }
-					]
-				  },
-				  "method": "POST",
-				  "header": [],
-				  "body": {
-					"mode": "raw",
-					"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
-					"options": {
-					  "raw": {
-						"language": "json"
-					  }
-					}
-				  },
-				  "url": {
-					"raw": "http://localhost:8080/transactions/send_ars",
-					"protocol": "http",
-					"host": [
-					  "localhost"
-					],
-					"port": "8080",
-					"path": [
-					  "transactions",
-					  "send_ars"
-					]
-				  }
-				},
-				"response": []
-			  }
+				{
+					"name": "listar transacciones por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAbWFpbC5jb20iLCJpYXQiOjE2ODkxNzc4MDMsImV4cCI6MTY4OTE3OTI0M30.FWMHlA2QRTD2edF557NrE_Gs4OAro9ZrCKuJtG3jfGY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/transactions/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
 			]
-		  }
+		}
 	]
 }

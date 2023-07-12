@@ -29,7 +29,6 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class TransactionController {
 
-
     private TransactionService transactionService;
     private JwtService jwtService;
     private DepositService depositService;
@@ -82,10 +81,15 @@ public class TransactionController {
         return (depositService.deposit(depositRequest, authentication));
     }
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Transaction>>  getTransactionsById (@PathVariable Long userId, @RequestHeader("Authorization") String token){
+    public ResponseEntity<?>  getTransactionsById (@PathVariable Long userId, @RequestHeader("Authorization") String token){
         var jwt = token.substring(7);
         var userEmail = jwtService.extractUserName(jwt);
-        return new ResponseEntity<>(this.transactionService.getTransactionsById(userId, userEmail), HttpStatus.OK) ;
+        try {
+            return new ResponseEntity<>(this.transactionService.getTransactionsById(userId, userEmail), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

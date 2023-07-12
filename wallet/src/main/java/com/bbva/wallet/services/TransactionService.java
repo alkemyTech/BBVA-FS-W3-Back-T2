@@ -7,6 +7,7 @@ import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.RoleName;
 import com.bbva.wallet.enums.TransactionType;
+import com.bbva.wallet.exceptions.ProhibitedAccessToTransactionsException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.RoleRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
@@ -155,7 +156,7 @@ public class TransactionService {
             } else if (byId.get().getName() == RoleName.ADMIN) {
                 return this.transactionRepository.getTransactionsById(userId);
             } else {
-                System.out.println("no puedes ver ");
+                throw new ProhibitedAccessToTransactionsException("No esta permitido acceder");
             }
         }
 
