@@ -44,4 +44,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    @ExceptionHandler(InsuficientBalanceException.class)
+    public ResponseEntity<Response<String>> handleInsuficientBalanceException(InsuficientBalanceException ex) {
+        Response<String> response = new Response<>();
+        String errorMessage = ex.getMessage();
+        response.addError(ErrorCodes.INSUFICIENT_BALANCE);
+        response.setMessage(errorMessage);
+        response.setData("Error con cuenta cbu: " + ex.getCbu());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
 }
