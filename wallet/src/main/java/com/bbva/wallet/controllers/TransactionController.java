@@ -1,6 +1,15 @@
 package com.bbva.wallet.controllers;
 
-
+import com.bbva.wallet.dtos.DepositRequest;
+import com.bbva.wallet.dtos.DepositResponse;
+import com.bbva.wallet.services.DepositService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.bbva.wallet.dtos.TransactionInputDto;
 import com.bbva.wallet.services.TransactionService;
 import io.jsonwebtoken.*;
@@ -16,10 +25,9 @@ import com.bbva.wallet.services.JwtService;
 @CrossOrigin(origins = "*")
 public class TransactionController {
 
-
     private TransactionService transactionService;
     private JwtService jwtService;
-
+    private DepositService depositService;
 
     @PostMapping("/send_ars")
     public ResponseEntity<?> transactionHandlersendArs(@RequestBody TransactionInputDto transactionInput, @RequestHeader("Authorization") String token) {
@@ -64,5 +72,9 @@ public class TransactionController {
 
     }
 
+    @PostMapping("/deposit")
+    public DepositResponse deposit(@RequestBody @Valid DepositRequest depositRequest, Authentication authentication){
+        return (depositService.deposit(depositRequest, authentication));
+    }
 
 }
