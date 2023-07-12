@@ -53,13 +53,13 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(
-                                        "/auth/**", "/swagger-ui/**", "/swagger-resources/*",
-                                        "/v3/api-docs/**")
+                                        "/auth/**")
                                 .permitAll()
-                                .requestMatchers("/api/**").hasAuthority(RoleName.USER.name())
-                                .requestMatchers("/users").hasAuthority(RoleName.ADMIN.name())
-                                .requestMatchers("/transactions").hasAuthority(RoleName.USER.name())
-                                .anyRequest().authenticated())
+                                .requestMatchers("/swagger-ui/**", "/swagger-resources/*",
+                                        "/v3/api-docs/**").hasAuthority(RoleName.ADMIN.name())
+                                .requestMatchers("/users/**").hasAnyAuthority(RoleName.ADMIN.name(), RoleName.USER.name())
+                                .requestMatchers("/transactions/**", "/accounts/**").hasAuthority(RoleName.USER.name())
+                        .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
