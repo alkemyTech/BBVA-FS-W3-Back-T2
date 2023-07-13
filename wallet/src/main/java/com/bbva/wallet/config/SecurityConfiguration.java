@@ -58,7 +58,6 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers("/api/**").hasAuthority(RoleName.USER.name())
                                 .requestMatchers("/users").hasAuthority(RoleName.ADMIN.name())
-                                .requestMatchers("/loan/simulate").hasAuthority(RoleName.USER.name())
                                 .requestMatchers("/transactions").hasAuthority(RoleName.USER.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
