@@ -37,4 +37,10 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(id, updateUser));
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("#id == authentication.principal.id || hasAuthority('ADMIN')")
+    public ResponseEntity<User> findUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findById(id));
+    }
+
 }

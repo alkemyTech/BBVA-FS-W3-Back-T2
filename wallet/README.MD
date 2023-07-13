@@ -4,7 +4,27 @@ Este proyecto es una aplicación que simula un sistema de gestión de billeteras
 
 ## Datos de prueba
 
-Se han generado usuarios de prueba para facilitar el uso y la evaluación del sistema. El script `UserSeeder`se ejecuta siempre y cuando no existan registros en la tabla `users`. A continuación se detallan los usuarios de prueba disponibles:
+Se han generado usuarios de prueba para facilitar el uso y la evaluación del sistema. Los datos de prueba se generan a través de scripts de inicialización que se ejecutan al iniciar la aplicación, siempre y cuando no existan registros previos en las tablas correspondientes. A continuación se detallan los datos de prueba disponibles y el orden en que se ejecutan los scripts:
+
+1. Script `RoleSeeder`:
+    - Condiciones de ejecución: Se ejecuta solo si no existen registros en la tabla `roles`.
+    - Propósito: Crea los roles de prueba para asignar permisos y controlar el acceso de los usuarios.
+
+2. Script `UserSeeder`:
+    - Condiciones de ejecución: Se ejecuta solo si no existen registros en la tabla `users`.
+    - Propósito: Crea los usuarios de prueba con sus respectivas credenciales y roles asignados.
+
+3. Script `AccountSeeder`:
+    - Condiciones de ejecución: Se ejecuta solo si no existen registros en la tabla `accounts`.
+    - Propósito: Crea las cuentas de prueba para los primeros diez usuarios con el rol de "Usuario", simulando saldos en diferentes monedas y límites de transacción.
+
+Estos scripts se ejecutan en el orden mencionado, asegurando que los datos de prueba se generen correctamente y las relaciones entre usuarios, roles y cuentas se establezcan adecuadamente.
+
+Es importante tener en cuenta que, al iniciar la aplicación por primera vez, los datos de prueba se generarán automáticamente y estarán disponibles para su uso. Si se realizan cambios en los datos de prueba o se necesitan más datos adicionales, es posible modificar los scripts correspondientes según las necesidades del proyecto.
+
+## Usuarios
+
+A continuación se detallan los usuarios de prueba disponibles:
 
 1. Usuario: Rodrigo Juarez
     - Correo electrónico: rodrigo@gmail.com
@@ -132,3 +152,8 @@ Se han generado roles de prueba para facilitar la administración de usuarios y 
 
 Los roles de prueba se utilizan para asignar permisos y controlar el acceso a las funcionalidades del sistema. Podés utilizar estos roles predefinidos al crear o modificar usuarios para establecer sus roles y permisos correspondientes.
 
+## Cuentas
+
+Se han generado cuentas de prueba para los primeros diez usuarios con el rol de "Usuario". Estas cuentas simulan la funcionalidad de tener saldos en diferentes monedas y límites de transacción. 
+
+Estos datos de prueba te permiten trabajar con cuentas y simular transacciones en diferentes monedas con límites de transacción personalizados. Podés utilizar estas cuentas para probar y evaluar la funcionalidad del sistema.

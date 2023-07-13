@@ -55,7 +55,7 @@ public class UserService {
     }
 
     public User updateUser(Long id, UpdateUser updateUser) {
-        Optional<User> userOptional  = userRepository.findById(id);
+        Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User updatedUser = userOptional.get();
             if (!updateUser.getFirstName().isEmpty()) {
@@ -71,5 +71,12 @@ public class UserService {
         } else {
             throw new UserNotFoundException("No se ha encontrado al usuario", id);
         }
+    }
+
+    public User findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent())
+            return user.get();
+        throw new UserNotFoundException("No se ha encontrado al usuario", id);
     }
 }
