@@ -57,8 +57,8 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers("/swagger-ui/**", "/swagger-resources/*",
                                         "/v3/api-docs/**").hasAuthority(RoleName.ADMIN.name())
-                                .requestMatchers("/users/**").hasAnyAuthority(RoleName.ADMIN.name(), RoleName.USER.name())
-                                .requestMatchers("/transactions/**", "/accounts/**").hasAuthority(RoleName.USER.name())
+                                .requestMatchers("/users/**", "/accounts/**").hasAnyAuthority(RoleName.ADMIN.name(), RoleName.USER.name())
+                                .requestMatchers("/transactions/**").hasAuthority(RoleName.USER.name())
                         .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
