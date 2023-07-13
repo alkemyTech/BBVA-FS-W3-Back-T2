@@ -6,13 +6,15 @@ import com.bbva.wallet.repositories.RoleRepository;
 import com.bbva.wallet.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.Ordered;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class UserSeeder implements CommandLineRunner {
+public class UserSeeder implements CommandLineRunner, Ordered {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -169,5 +171,10 @@ public class UserSeeder implements CommandLineRunner {
                     .build();
             userRepository.saveAll(List.of(user, user2, user3, user4, user5, user6, user7, user8, user9, user10, user11, user12, user13, user14, user15, user16, user17, user18, user19, user20));
         }
+    }
+
+    @Override
+    public int getOrder() {
+        return 2;
     }
 }
