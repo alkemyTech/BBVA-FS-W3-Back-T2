@@ -5,7 +5,8 @@ package com.bbva.wallet.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+ import org.springframework.http.HttpMethod;
+ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -57,7 +58,9 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers("/swagger-ui/**", "/swagger-resources/*",
                                         "/v3/api-docs/**").hasAuthority(RoleName.ADMIN.name())
-                                .requestMatchers("/users/**", "/accounts/**").hasAnyAuthority(RoleName.ADMIN.name(), RoleName.USER.name())
+                                .requestMatchers(HttpMethod.DELETE, "/users/{id}").hasAuthority(RoleName.USER.name())
+                                .requestMatchers("/users/**").hasAuthority(RoleName.ADMIN.name())
+                                .requestMatchers("/accounts/**").hasAnyAuthority(RoleName.ADMIN.name(), RoleName.USER.name())
                                 .requestMatchers("/transactions/**").hasAuthority(RoleName.USER.name())
                         .anyRequest().permitAll())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
