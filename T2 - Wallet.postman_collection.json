@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "cab2a582-64e6-4828-9029-2da4875c139d",
+		"_postman_id": "418c16e3-c982-4d3a-a9c4-77fbe83b019e",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21143328"
+		"_exporter_id": "23155575"
 	},
 	"item": [
 		{
@@ -79,7 +79,18 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:8080/users/3"
+						"url": {
+							"raw": "http://localhost:8080/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"3"
+							]
+						}
 					},
 					"response": []
 				},
@@ -88,7 +99,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users"
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
 					},
 					"response": []
 				}
@@ -102,7 +123,18 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/accounts/1"
+						"url": {
+							"raw": "http://localhost:8080/accounts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -111,7 +143,130 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "localhost:8080/accounts/balance"
+						"url": {
+							"raw": "localhost:8080/accounts/balance",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create USD account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\": \"USD\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/accounts",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create ARS account",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\": \"ARS\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/accounts",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"arvum@gmail.com\",\r\n    \"password\": \"estaf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
 					},
 					"response": []
 				}
@@ -120,124 +275,124 @@
 		{
 			"name": "/transactions",
 			"item": [
-			  {
-				"name": "Realizar un depósito",
-				"request": {
-				  "auth": {
-					"type": "bearer",
-					"bearer": [
-					  {
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
-						"type": "string"
-					  }
-					]
-				  },
-				  "method": "POST",
-				  "header": [],
-				  "body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10\r\n}",
-					"options": {
-					  "raw": {
-						"language": "json"
-					  }
-					}
-				  },
-				  "url": {
-					"raw": "http://localhost:8080/transactions/deposit",
-					"protocol": "http",
-					"host": [
-					  "localhost"
-					],
-					"port": "8080",
-					"path": [
-					  "transactions",
-					  "deposit"
-					]
-				  }
+				{
+					"name": "Realizar un depósito",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/deposit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"deposit"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Enviar Dólares",
-				"request": {
-				  "auth": {
-					"type": "bearer",
-					"bearer": [
-					  {
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
-						"type": "string"
-					  }
-					]
-				  },
-				  "method": "POST",
-				  "header": [],
-				  "body": {
-					"mode": "raw",
-					"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
-					"options": {
-					  "raw": {
-						"language": "json"
-					  }
-					}
-				  },
-				  "url": {
-					"raw": "http://localhost:8080/transactions/send_usd",
-					"protocol": "http",
-					"host": [
-					  "localhost"
-					],
-					"port": "8080",
-					"path": [
-					  "transactions",
-					  "send_usd"
-					]
-				  }
+				{
+					"name": "Enviar Dólares",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/send_usd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"send_usd"
+							]
+						}
+					},
+					"response": []
 				},
-				"response": []
-			  },
-			  {
-				"name": "Enviar Pesos",
-				"request": {
-				  "auth": {
-					"type": "bearer",
-					"bearer": [
-					  {
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
-						"type": "string"
-					  }
-					]
-				  },
-				  "method": "POST",
-				  "header": [],
-				  "body": {
-					"mode": "raw",
-					"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
-					"options": {
-					  "raw": {
-						"language": "json"
-					  }
-					}
-				  },
-				  "url": {
-					"raw": "http://localhost:8080/transactions/send_ars",
-					"protocol": "http",
-					"host": [
-					  "localhost"
-					],
-					"port": "8080",
-					"path": [
-					  "transactions",
-					  "send_ars"
-					]
-				  }
-				},
-				"response": []
-			  }
+				{
+					"name": "Enviar Pesos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"cbu\":\"98765432\",\r\n\"amount\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions/send_ars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"send_ars"
+							]
+						}
+					},
+					"response": []
+				}
 			]
-		  }
+		}
 	]
 }
