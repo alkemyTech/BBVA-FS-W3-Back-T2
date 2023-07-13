@@ -2,6 +2,7 @@ package com.bbva.wallet.controllers;
 
 import com.bbva.wallet.dtos.DepositRequest;
 import com.bbva.wallet.dtos.DepositResponse;
+import com.bbva.wallet.entities.User;
 import com.bbva.wallet.services.DepositService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
@@ -81,11 +82,11 @@ public class TransactionController {
         return (depositService.deposit(depositRequest, authentication));
     }
     @GetMapping("/{userId}")
-    public ResponseEntity<?>  getTransactionsById (@PathVariable Long userId, @RequestHeader("Authorization") String token){
-        var jwt = token.substring(7);
-        var userEmail = jwtService.extractUserName(jwt);
+    @PreAuthorize("#userId == authentication.principal.id || hasAuthority('ADMIN')")
+    public ResponseEntity<?>  getTransactionsById (@PathVariable Long userId, Authentication authentication){
+        User user = (User) authentication.getPrincipal();
         try {
-            return new ResponseEntity<>(this.transactionService.getTransactionsById(userId, userEmail), HttpStatus.OK);
+            return new ResponseEntity<>(this.transactionService.getTransactionsById(userId, user.getEmail()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

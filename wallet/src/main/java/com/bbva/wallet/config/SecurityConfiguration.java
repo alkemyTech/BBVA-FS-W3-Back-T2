@@ -59,9 +59,6 @@ public class SecurityConfiguration {
                                 .permitAll()
                                 .requestMatchers("/api/**").hasAuthority(RoleName.USER.name())
                                 .requestMatchers("/users").hasAuthority(RoleName.ADMIN.name())
-                                .requestMatchers("/transactions/send_ars").hasAuthority(RoleName.USER.name())
-                                .requestMatchers("/transactions/send_usd").hasAuthority(RoleName.USER.name())
-                                .requestMatchers(HttpMethod.GET,"/transactions/{userId}").hasAnyAuthority(RoleName.ADMIN.name(),RoleName.USER.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
