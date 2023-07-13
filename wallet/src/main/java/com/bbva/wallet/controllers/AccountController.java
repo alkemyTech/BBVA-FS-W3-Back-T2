@@ -1,4 +1,3 @@
-
 package com.bbva.wallet.controllers;
 
 import com.bbva.wallet.dtos.AccountCreationRequest;
@@ -9,6 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import com.bbva.wallet.dtos.AccountsBalance;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.List;
@@ -38,6 +42,11 @@ public class AccountController {
         return ResponseEntity
                 .created(URI.create("/accounts/" + account.getCbu()))
                 .body(account);
+    }
+    @GetMapping("/balance")
+    public AccountsBalance getBalance(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return accountService.getAccountsBalance(user);
     }
 
 }

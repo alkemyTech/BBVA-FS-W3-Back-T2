@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
-    Account existsByUserAndCurrency(User user, Currency currency);
-    boolean findByUserAndCurrency(User user, Currency currency);
+    Account findByUserAndCurrency(User user, Currency currency);
+    boolean existsByUserAndCurrency(User user, Currency currency);
     List<Account> findByUser(User user);
 
 }
