@@ -39,9 +39,11 @@ public class UserController {
         return userService.findAllUsers();
     }
 
+    @Operation(summary = "Find user by ID", description = "Retrieve user details by providing the user ID")
     @GetMapping("/{id}")
     @PreAuthorize("#id == authentication.principal.id || hasAuthority('ADMIN')")
-    public ResponseEntity<User> findUser(@PathVariable Long id) {
+    public ResponseEntity<User> findUser(
+            @Parameter(description = "User ID") @PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
