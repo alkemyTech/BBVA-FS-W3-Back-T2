@@ -1,6 +1,7 @@
 package com.bbva.wallet.services;
 
 import com.bbva.wallet.entities.User;
+import com.bbva.wallet.exceptions.UserNotFoundException;
 import com.bbva.wallet.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -52,4 +53,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent())
+            return user.get();
+        throw new UserNotFoundException("No se ha encontrado al usuario", id);
+    }
 }
