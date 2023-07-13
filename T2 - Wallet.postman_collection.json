@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "418c16e3-c982-4d3a-a9c4-77fbe83b019e",
+		"_postman_id": "a13e9b69-0769-4648-870f-f4821011b1f7",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23155575"
+		"_exporter_id": "21143328"
 	},
 	"item": [
 		{
@@ -315,6 +315,35 @@
 					"response": []
 				},
 				{
+					"name": "listar transacciones por id Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAbWFpbC5jb20iLCJpYXQiOjE2ODkxNzc4MDMsImV4cCI6MTY4OTE3OTI0M30.FWMHlA2QRTD2edF557NrE_Gs4OAro9ZrCKuJtG3jfGY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/transactions/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Enviar Dólares",
 					"request": {
 						"auth": {
@@ -387,6 +416,49 @@
 							"path": [
 								"transactions",
 								"send_ars"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/loan",
+			"item": [
+				{
+					"name": "http://localhost:8080/loan/simulate",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAbWFpbC5jb20iLCJpYXQiOjE2ODkyNzcwMDAsImV4cCI6MTY4OTI3ODQ0MH0.22AMCh7hh6oPyU4-sR-SJl3dp5Y4PfpNOk4PKlzlPHQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"deadlines\": 12,\r\n\"amount\":10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/loan/simulate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loan",
+								"simulate"
 							]
 						}
 					},
