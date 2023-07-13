@@ -7,6 +7,11 @@ import com.bbva.wallet.dtos.TransactionHistory;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.FixedTermDeposit;
 import com.bbva.wallet.entities.User;
+import com.bbva.wallet.enums.Currency;
+import com.bbva.wallet.exceptions.AccountCreationException;
+import com.bbva.wallet.repositories.AccountRepository;
+import com.bbva.wallet.utils.CbuUtil;
+import org.springframework.stereotype.Service;
 import com.bbva.wallet.exceptions.DeletedUserException;
 import com.bbva.wallet.repositories.FixedTermDepositRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
@@ -17,20 +22,36 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import com.bbva.wallet.enums.Currency;
-import com.bbva.wallet.repositories.AccountRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-@RequiredArgsConstructor
 public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
     private final FixedTermDepositRepository fixedTermDepositRepository;
 
+    public AccountService(AccountRepository accountRepository, UserRepository userRepository, TransactionRepository transactionRepository, FixedTermDepositRepository fixedTermDepositRepository) {
+        this.accountRepository = accountRepository;
+        this.userRepository = userRepository;
+        this.transactionRepository = transactionRepository;
+        this.fixedTermDepositRepository = fixedTermDepositRepository;
+    }
+
+    public Account createAccount(User user, Currency currency) {
+
+        if (accountRepository.existsByUserAndCurrency(user, currency)) {
+            throw new AccountCreationException("Ya existe una cuenta del mismo tipo para este usuario.");
+        }
+
+        String cbu = CbuUtil.generateCbu();
+
+        double transaction = currency == Currency.ARS ? 300000.0 : 1000.0;
+
+        Account account = buildAccount(cbu, currency, transaction, user);
+
+        return accountRepository.save(account);
+    }
     public Account buildAccount(String cbu, Currency currency, double transactionLimit, User user) {
         return Account.builder()
                 .user(user)
@@ -110,3 +131,4 @@ public class AccountService {
         }
     }
 }
+
