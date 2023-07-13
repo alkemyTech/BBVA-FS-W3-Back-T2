@@ -5,12 +5,13 @@ import com.bbva.wallet.enums.RoleName;
 import com.bbva.wallet.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class RoleSeeder implements CommandLineRunner {
+public class RoleSeeder implements CommandLineRunner, Ordered {
     @Autowired
     private RoleRepository roleRepository;
 
@@ -27,4 +28,8 @@ public class RoleSeeder implements CommandLineRunner {
         }
     }
 
+    @Override
+    public int getOrder() {
+        return 1;
+    }
 }
