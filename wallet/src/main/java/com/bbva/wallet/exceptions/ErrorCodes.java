@@ -5,6 +5,7 @@ public enum ErrorCodes {
     INVALID_VALUE,
     FAILED_AUTHENTICATION,
     ACCOUNT_NOT_FOUND,
+    ACCESS_DENIED,
     DELETED_USER
 }
 
