@@ -44,6 +44,33 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
+    @ExceptionHandler(InexistentAccountException.class)
+    public ResponseEntity<Response<String>> handleAccountNotFoundException(InexistentAccountException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.ACCOUNT_NOT_FOUND);
+        response.setMessage(ex.getMessage());
+        response.setData(String.valueOf(ex.getAccountId()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(NoUserAccountsException.class)
+    public ResponseEntity<Response<String>> handleAccountNotFoundException(NoUserAccountsException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.ACCOUNT_NOT_FOUND);
+        response.setMessage(ex.getMessage());
+        response.setData("sin cuentas");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(UserAccountMismatchException.class)
+    public ResponseEntity<Response<String>> handleUserAccountMismatchException(UserAccountMismatchException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INVALID_VALUE);
+        response.setMessage(ex.getMessage());
+        response.setData("id: " + ex.getAccountId());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseBody
     public ResponseEntity<Response<String>> handleUserNotFoundException(UserNotFoundException ex) {
@@ -81,5 +108,4 @@ public class GlobalExceptionHandler {
         response.setData(ex.getDeletedUser());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-
 }
