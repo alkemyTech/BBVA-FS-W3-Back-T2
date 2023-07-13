@@ -2,8 +2,10 @@ package com.bbva.wallet.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.naming.AuthenticationException;
@@ -40,6 +42,25 @@ public class GlobalExceptionHandler {
         response.setMessage(ex.getMessage());
         response.setData("error de autenticación");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseBody
+    public ResponseEntity<Response<String>> handleUserNotFoundException(UserNotFoundException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INVALID_VALUE);
+        response.setMessage(ex.getMessage());
+        response.setData("id: " + String.valueOf(ex.getId()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Response<String>> handleAccessDeniedException(AccessDeniedException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.ACCESS_DENIED);
+        response.setMessage("Sin permisos necesarios para realizar esta acción.");
+        response.setData("acceso denegado");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
     @ExceptionHandler(AccountNotFoundException.class)

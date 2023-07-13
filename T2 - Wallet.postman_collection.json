@@ -95,6 +95,15 @@
 					"response": []
 				},
 				{
+					"name": "Obtener detalle de usuario especificado en el endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/users/1"
+					},
+					"response": []
+				},
+				{
 					"name": "Obtener todos los usuarios",
 					"request": {
 						"method": "GET",
