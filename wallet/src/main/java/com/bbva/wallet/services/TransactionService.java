@@ -1,29 +1,41 @@
 package com.bbva.wallet.services;
 
-import com.bbva.wallet.dtos.TransactionInputDto;
+import com.bbva.wallet.dtos.Payment;
+import com.bbva.wallet.dtos.PaymentRegister;
+import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.Transaction;
+import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.TransactionType;
+import com.bbva.wallet.exceptions.AccountNotFoundException;
+import com.bbva.wallet.exceptions.InsufficientFundsException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
+import org.springframework.stereotype.Service;
+import com.bbva.wallet.dtos.TransactionInputDto;
+import com.bbva.wallet.entities.Role;
+import com.bbva.wallet.enums.RoleName;
+import com.bbva.wallet.exceptions.ProhibitedAccessToTransactionsException;
+import com.bbva.wallet.repositories.RoleRepository;
 import com.bbva.wallet.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class TransactionService {
 
-
     private UserRepository userRepository;
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
-
-
+    private RoleRepository roleRepository;
 
     @SneakyThrows
     @Transactional
@@ -31,7 +43,7 @@ public class TransactionService {
 
 
         var SenderUser = userRepository.findByEmail(username).get();
-        var SenderAccount = accountRepository.findByUserAndCurrency(SenderUser, Currency.ARS);
+        var SenderAccount = accountRepository.findByUserAndCurrency(SenderUser, Currency.ARS).get();
         var ReceiverAccount = accountRepository.findById(Receiver.getCbu()).get();
 
         if (ReceiverAccount.getCurrency() != Currency.ARS){
@@ -86,7 +98,7 @@ public class TransactionService {
 
 
         var SenderUser = userRepository.findByEmail(username).get();
-        var SenderAccount = accountRepository.findByUserAndCurrency(SenderUser, Currency.USD);
+        var SenderAccount = accountRepository.findByUserAndCurrency(SenderUser, Currency.USD).get();
         var ReceiverAccount = accountRepository.findById(Receiver.getCbu()).get();
 
         if (ReceiverAccount.getCurrency() != Currency.USD){
@@ -133,6 +145,54 @@ public class TransactionService {
         accountRepository.save(ReceiverAccount);
 
         return true;
+    }
+
+    @GetMapping("/{userId}")
+    public List<Transaction> getTransactionsById(Long userId, String email) {
+        Optional<User> byEmail = this.userRepository.findByEmail(email);
+
+        if (byEmail.isPresent()) {
+            Optional<Role> byId = this.roleRepository.findById(byEmail.get().getRoleId().getId());
+            if (Objects.equals(byEmail.get().getId(), userId)){
+                return this.transactionRepository.getTransactionsById(userId);
+            } else if (byId.get().getName() == RoleName.ADMIN) {
+                return this.transactionRepository.getTransactionsById(userId);
+            } else {
+                throw new ProhibitedAccessToTransactionsException("No esta permitido acceder");
+            }
+        }
+
+        return null;
+    }
+
+    public Transaction buildTransaction(Account account, Double amount, TransactionType transactionType, String description) {
+        return Transaction.builder()
+                .account(account)
+                .amount(amount)
+                .name(transactionType)
+                .description(description)
+                .build();
+    }
+
+    public PaymentRegister pay(User user, Payment payment) {
+        Double amount = payment.getAmount();
+        Currency currency = payment.getCurrency();
+        PaymentRegister paymentRegister = new PaymentRegister();
+        Optional<Account> optionalAccount = accountRepository.findByUserAndCurrency(user, currency);
+        optionalAccount.ifPresent(account -> {
+            if (account.getBalance() >= amount) {
+                Transaction transaction = buildTransaction(account, amount, TransactionType.PAYMENT, "Payment");
+                account.setBalance(account.getBalance() - amount);
+                paymentRegister.setTransaction(transactionRepository.save(transaction));
+                paymentRegister.setAccount(account);
+            } else {
+                throw new InsufficientFundsException("Fondos insuficientes");
+            }
+        });
+        if (optionalAccount.isEmpty()) {
+            throw new AccountNotFoundException("No se ha encontrado una cuenta en la moneda indicada", currency);
+        }
+        return paymentRegister;
     }
 
 }
