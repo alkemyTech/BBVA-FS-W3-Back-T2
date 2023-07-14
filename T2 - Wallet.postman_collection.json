@@ -73,6 +73,24 @@
 					"response": []
 				},
 				{
+					"name": "Actualizar usuario",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Rodri\",\n    \"lastName\": \"Juarez\",\n    \"password\": \"pass\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/users/1"
+					},
+					"response": []
+				},
+				{
 					"name": "Obtener todos los usuarios",
 					"request": {
 						"method": "GET",
