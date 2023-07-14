@@ -1,9 +1,7 @@
 package com.bbva.wallet.entities;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 @Getter
@@ -11,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
+@Builder
 @Entity
 @Table(name = "fixed_term_deposits")
 public class FixedTermDeposit {
@@ -29,6 +27,7 @@ public class FixedTermDeposit {
     @Column(name = "interest", nullable = false)
     private Double interest;
 
+    @CreationTimestamp
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
