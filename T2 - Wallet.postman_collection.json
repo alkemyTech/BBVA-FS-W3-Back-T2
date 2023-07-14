@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "68101844-d615-4bc0-967b-708c6ec738a5",
+		"_postman_id": "55f8652d-f559-4eda-904c-62d59912479e",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
@@ -24,17 +24,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8080/auth/register",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"register"
-							]
-						}
+						"url": "localhost:8080/auth/register"
 					},
 					"response": []
 				},
@@ -55,17 +45,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8080/auth/login",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
+						"url": "localhost:8080/auth/login"
 					},
 					"response": []
 				}
@@ -156,17 +136,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "localhost:8080/accounts/balance",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"accounts",
-								"balance"
-							]
-						}
+						"url": "localhost:8080/accounts/balance"
 					},
 					"response": []
 				},
@@ -175,13 +145,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
+							"bearer": {
+								"0": {
 									"key": "token",
 									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
 									"type": "string"
 								}
-							]
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -194,16 +164,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8080/accounts",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"accounts"
-							]
-						}
+						"url": "localhost:8080/accounts"
 					},
 					"response": []
 				},
@@ -223,13 +184,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
+							"bearer": {
+								"0": {
 									"key": "token",
 									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
 									"type": "string"
 								}
-							]
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -242,16 +203,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8080/accounts",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"accounts"
-							]
-						}
+						"url": "localhost:8080/accounts"
 					},
 					"response": []
 				},
@@ -269,17 +221,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "localhost:8080/auth/login",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
+						"url": "localhost:8080/auth/login"
 					},
 					"response": []
 				}
@@ -293,13 +235,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
+							"bearer": {
+								"0": {
 									"key": "token",
 									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
 									"type": "string"
 								}
-							]
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -312,18 +254,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/transactions/deposit",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"transactions",
-								"deposit"
-							]
-						}
+						"url": "http://localhost:8080/transactions/deposit"
 					},
 					"response": []
 				},
@@ -332,13 +263,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
+							"bearer": {
+								"0": {
 									"key": "token",
 									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
 									"type": "string"
 								}
-							]
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -351,18 +282,31 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/transactions/send_usd",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"transactions",
-								"send_usd"
-							]
-						}
+						"url": "http://localhost:8080/transactions/send_usd"
+					},
+					"response": []
+				},
+				{
+					"name": "Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTE4MTgxMywiZXhwIjoxNjg5MTgzMjUzfQ.rqQAZPu_gUK_2IRkAlJkFUJIqTFAqE4WX1y2EE9Pxj4"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 180,\n    \"currency\": \"ARS\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "localhost:8080/transactions/payment"
 					},
 					"response": []
 				},
@@ -371,13 +315,13 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
+							"bearer": {
+								"0": {
 									"key": "token",
 									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
 									"type": "string"
 								}
-							]
+							}
 						},
 						"method": "POST",
 						"header": [],
@@ -390,18 +334,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/transactions/send_ars",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"transactions",
-								"send_ars"
-							]
-						}
+						"url": "http://localhost:8080/transactions/send_ars"
 					},
 					"response": []
 				}
