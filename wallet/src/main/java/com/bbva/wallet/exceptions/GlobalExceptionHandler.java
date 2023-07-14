@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.naming.AuthenticationException;
@@ -71,16 +70,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseBody
-    public ResponseEntity<Response<String>> handleUserNotFoundException(UserNotFoundException ex) {
-        Response<String> response = new Response<>();
-        response.addError(ErrorCodes.INVALID_VALUE);
-        response.setMessage(ex.getMessage());
-        response.setData("id: " + String.valueOf(ex.getId()));
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Response<String>> handleAccessDeniedException(AccessDeniedException ex) {
         Response<String> response = new Response<>();
@@ -106,6 +95,15 @@ public class GlobalExceptionHandler {
         response.addError(ErrorCodes.DELETED_USER);
         response.setMessage(ex.getMessage());
         response.setData(ex.getDeletedUser());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Response<String>> handleUserNotFoundException(UserNotFoundException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INVALID_VALUE);
+        response.setMessage(ex.getMessage());
+        response.setData("id: " + String.valueOf(ex.getId()));
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }
