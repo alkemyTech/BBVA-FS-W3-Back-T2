@@ -19,5 +19,5 @@ public class LoanConfig {
     private Long id;
 
     @Column(name = "loan_interest")
-    private double LoanInterest = 105.38;
+    private double loanInterest = 0.05;
 }

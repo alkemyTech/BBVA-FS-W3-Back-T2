@@ -17,7 +17,7 @@ public class LoanSimulateResponse {
     @JsonProperty("TotalAPagar")
     private double totalToPay;
 
-    @JsonProperty("InteresAnual")
+    @JsonProperty("InteresMensual")
     private double interestRates;
 
 }

@@ -15,9 +15,9 @@ public class LoanService {
 
     public LoanSimulateResponse simulateLoan(LoanSimulateRequest loanSimulateRequest) {
         var loanConfig = loanConfigRepository.findById(1L).get();
-        double interestRatesCalculate = (loanConfig.getLoanInterest() * loanSimulateRequest.getDeadlines()) / 12;
-        double totalPayCalculate =loanSimulateRequest.getAmount()+((loanSimulateRequest.getAmount() * interestRatesCalculate) / 100);
-        double monthlyPaymentsCalculate = totalPayCalculate / loanSimulateRequest.getDeadlines();
+        double interestRatesCalculate = loanConfig.getLoanInterest() * loanSimulateRequest.getInstallments();
+        double totalPayCalculate =loanSimulateRequest.getAmount()+(loanSimulateRequest.getAmount() * interestRatesCalculate);
+        double monthlyPaymentsCalculate = totalPayCalculate / loanSimulateRequest.getInstallments();
 
 
         LoanSimulateResponse loanSimulateResponse = new LoanSimulateResponse();

@@ -12,9 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoanSimulateRequest {
 
-    @Min(value = 1, message ="El plazo de un prestamo debe ser de 1 a 36 meses" )
-    @Max(value = 36, message ="El plazo de un prestamo debe ser de 1 a 36 meses")
-    private int deadlines;
+    @Min(value = 1, message ="El plazo de un prestamo debe ser al menos 1" )
+    private int installments;
 
     @Min(value = 1)
     private double amount;
