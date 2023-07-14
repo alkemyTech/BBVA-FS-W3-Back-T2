@@ -1,5 +1,5 @@
 package com.bbva.wallet.dtos;
-import com.bbva.wallet.entities.User;
+
 import lombok.*;
 import java.util.List;
 
@@ -11,7 +11,3 @@ public class PageTransactionResponse {
     private String previousPageUrl;
     private String nextPageUrl;
 }
-
-
-
-

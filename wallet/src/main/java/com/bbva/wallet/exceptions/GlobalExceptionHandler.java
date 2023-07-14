@@ -52,6 +52,7 @@ public class GlobalExceptionHandler {
         response.setData("Error con cuenta cbu: " + ex.getCbu());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<Response<String>> handleAccountNotFoundException(AccountNotFoundException ex) {
         Response<String> response = new Response<>();
@@ -131,6 +132,4 @@ public class GlobalExceptionHandler {
         response.setMessage(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-
-
 }

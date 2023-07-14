@@ -16,18 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.bbva.wallet.dtos.DepositRequest;
 import com.bbva.wallet.dtos.DepositResponse;
-import com.bbva.wallet.services.DepositService;
 import com.bbva.wallet.dtos.TransactionInputDto;
-import com.bbva.wallet.services.TransactionService;
 import io.jsonwebtoken.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.bbva.wallet.services.JwtService;
-
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/transactions")
@@ -57,7 +52,6 @@ public class TransactionController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Illegal argument", HttpStatus.UNAUTHORIZED);
         }
-
     }
 
     @PostMapping("/send_usd")
@@ -78,8 +72,6 @@ public class TransactionController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Illegal argument", HttpStatus.UNAUTHORIZED);
         }
-
-
     }
 
     @PostMapping("/deposit")
@@ -113,7 +105,4 @@ public class TransactionController {
             throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
         }
     }
-
-
-
 }

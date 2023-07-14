@@ -1,32 +1,24 @@
 package com.bbva.wallet.services;
 
-import com.bbva.wallet.dtos.UpdateAccount;
-import com.bbva.wallet.dtos.AccountBalance;
-import com.bbva.wallet.dtos.AccountsBalance;
-import com.bbva.wallet.dtos.TransactionDto;
-import com.bbva.wallet.dtos.TransactionHistory;
+import com.bbva.wallet.dtos.*;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.FixedTermDeposit;
 import com.bbva.wallet.entities.User;
-import com.bbva.wallet.exceptions.InexistentAccountException;
-import com.bbva.wallet.exceptions.NoUserAccountsException;
-import com.bbva.wallet.exceptions.UserAccountMismatchException;
 import com.bbva.wallet.enums.Currency;
-import com.bbva.wallet.exceptions.AccountCreationException;
+import com.bbva.wallet.exceptions.*;
 import com.bbva.wallet.repositories.AccountRepository;
-import com.bbva.wallet.utils.CbuUtil;
-import org.springframework.stereotype.Service;
-import com.bbva.wallet.exceptions.DeletedUserException;
 import com.bbva.wallet.repositories.FixedTermDepositRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
+import com.bbva.wallet.utils.CbuUtil;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.time.LocalDateTime;
 
 @Service
 public class AccountService {

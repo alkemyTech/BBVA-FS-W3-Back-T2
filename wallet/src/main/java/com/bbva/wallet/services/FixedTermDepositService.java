@@ -6,8 +6,8 @@ import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.FixedTermDeposit;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
-import com.bbva.wallet.exceptions.InsuficientBalanceException;
 import com.bbva.wallet.exceptions.AccountNotFoundException;
+import com.bbva.wallet.exceptions.InsuficientBalanceException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.FixedTermDepositRepository;
 import com.bbva.wallet.repositories.UserRepository;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
