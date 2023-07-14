@@ -8,6 +8,7 @@ public enum ErrorCodes {
     ACCOUNT_NOT_FOUND,
     INSUFFICIENT_FUNDS,
     ACCESS_DENIED,
-    DELETED_USER
+    DELETED_USER,
+    INVALID_URL_REQUEST,
 }
 

@@ -124,4 +124,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(InvalidUrlRequestException.class)
+    public ResponseEntity<Response<String>> handleInvalidUrlRequestException(InvalidUrlRequestException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INVALID_URL_REQUEST);
+        response.setMessage(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+
 }
