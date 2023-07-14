@@ -1,5 +1,7 @@
 package com.bbva.wallet.services;
 
+import com.bbva.wallet.dtos.PageTransactionResponse;
+import com.bbva.wallet.dtos.TransactionDto;
 import com.bbva.wallet.dtos.TransactionInputDto;
 import com.bbva.wallet.entities.Role;
 import com.bbva.wallet.entities.Transaction;
@@ -7,6 +9,7 @@ import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.RoleName;
 import com.bbva.wallet.enums.TransactionType;
+import com.bbva.wallet.exceptions.InvalidUrlRequestException;
 import com.bbva.wallet.exceptions.ProhibitedAccessToTransactionsException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.RoleRepository;
@@ -14,6 +17,9 @@ import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -162,4 +168,36 @@ public class TransactionService {
 
         return null;
     }
+
+    public PageTransactionResponse findAllTransaction(int page) {
+        int pageSize = 10;
+        PageTransactionResponse pageTransactionResponse = new PageTransactionResponse();
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        //contenido de página
+        Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
+        pageTransactionResponse.setTransactions(transactionsPage.getContent().stream().map(TransactionDto:: new).toList());
+
+        //valida que la página tenga contenido
+        if(pageTransactionResponse.getTransactions().size() == 0)
+            throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
+
+        //url de página siguiente
+        if (transactionsPage.hasNext()) {
+            int nextPage = transactionsPage.getNumber() + 1;
+            String nextPageUrl = "/transactions?page=" + nextPage;
+            pageTransactionResponse.setNextPageUrl(nextPageUrl);
+        }
+
+        //url de página anterior
+        if (transactionsPage.hasPrevious()) {
+            int previousPage = transactionsPage.getNumber() - 1;
+            String previousPageUrl = "/transactions?page=" + previousPage;
+            pageTransactionResponse.setPreviousPageUrl(previousPageUrl);
+        }
+
+        return pageTransactionResponse;
+    }
+
+
 }
