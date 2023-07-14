@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c5287eb8-7dcd-464f-bd4c-be2413f203b8",
+		"_postman_id": "6a508e52-b83a-455c-a0d9-b8e62c4edcf6",
 		"name": "T2 - Wallet Copy",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -521,6 +521,49 @@
 							"path": [
 								"transactions",
 								"send_ars"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fixedTerm",
+			"item": [
+				{
+					"name": "Crear plazo fijo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5ODk4NiwiZXhwIjoxNjg5MzAwNDI2fQ.LRlCEgxb3EBv0m6yv_BnUMSgUUVDaaLFMorJuOQEXc0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\" : 500,\r\n    \"totalDays\":30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/fixedTerm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fixedTerm"
 							]
 						}
 					},
