@@ -99,7 +99,7 @@ public class FixedTermDepositService {
         return accounts.stream()
                 .filter(c -> c.getCurrency() == Currency.ARS && !c.isSoftDelete())
                 .findAny()
-                .orElseThrow(() -> new AccountNotFoundException("El usuario no tiene una cuenta en pesos", user.getId()));
+                .orElseThrow(() -> new AccountNotFoundException("El usuario no tiene una cuenta en pesos", Currency.ARS));
     }
 
 }
