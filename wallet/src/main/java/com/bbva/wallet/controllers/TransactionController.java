@@ -1,15 +1,18 @@
 package com.bbva.wallet.controllers;
 
-import com.bbva.wallet.dtos.*;
+import com.bbva.wallet.dtos.DepositRequest;
+import com.bbva.wallet.dtos.DepositResponse;
 import com.bbva.wallet.entities.User;
-import com.bbva.wallet.exceptions.InvalidUrlRequestException;
 import com.bbva.wallet.services.DepositService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.bbva.wallet.dtos.TransactionInputDto;
+import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.services.TransactionService;
 import io.jsonwebtoken.*;
 import lombok.AllArgsConstructor;
@@ -78,7 +81,6 @@ public class TransactionController {
     public DepositResponse deposit(@RequestBody @Valid DepositRequest depositRequest, Authentication authentication){
         return (depositService.deposit(depositRequest, authentication));
     }
-
     @GetMapping("/{userId}")
     @PreAuthorize("#userId == authentication.principal.id || hasAuthority('ADMIN')")
     public ResponseEntity<?>  getTransactionsById (@PathVariable Long userId, Authentication authentication){
@@ -90,16 +92,6 @@ public class TransactionController {
         }
 
     }
-
-    @GetMapping("")
-    public PageTransactionResponse findAllUsers(@RequestParam(defaultValue = "0") int page) {
-        try {
-            return transactionService.findAllTransaction(page);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
-        }
-    }
-
 
 
 }
