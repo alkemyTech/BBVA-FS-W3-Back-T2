@@ -1,6 +1,6 @@
 package com.bbva.wallet.services;
 
-import com.bbva.wallet.dtos.UpdateUser;
+import com.bbva.wallet.dtos.UpdateUserRequest;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.exceptions.UserNotFoundException;
 import com.bbva.wallet.repositories.UserRepository;
@@ -54,18 +54,18 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User updateUser(Long id, UpdateUser updateUser) {
+    public User updateUser(Long id, UpdateUserRequest updateUserRequest) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User updatedUser = userOptional.get();
-            if (!updateUser.getFirstName().isEmpty()) {
-                updatedUser.setFirstName(updateUser.getFirstName());
+            if (!updateUserRequest.getFirstName().isEmpty()) {
+                updatedUser.setFirstName(updateUserRequest.getFirstName());
             }
-            if (!updateUser.getLastName().isEmpty()) {
-                updatedUser.setLastName(updateUser.getLastName());
+            if (!updateUserRequest.getLastName().isEmpty()) {
+                updatedUser.setLastName(updateUserRequest.getLastName());
             }
-            if (!updateUser.getPassword().isEmpty()) {
-                updatedUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+            if (!updateUserRequest.getPassword().isEmpty()) {
+                updatedUser.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
             }
             return userRepository.save(updatedUser);
         } else {
