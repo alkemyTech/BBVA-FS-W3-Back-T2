@@ -1,5 +1,6 @@
 package com.bbva.wallet.entities;
 import com.bbva.wallet.enums.Currency;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -35,16 +36,20 @@ public class Account {
     @Column(unique = true, nullable = false)
     private String cbu;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user;
 
+    @JsonIgnore
     @CreationTimestamp
     private LocalDateTime creationDate;
 
+    @JsonIgnore
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
+    @JsonIgnore
     private boolean softDelete;
 
 }
