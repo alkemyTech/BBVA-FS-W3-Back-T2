@@ -76,7 +76,7 @@ public class FixedTermDepositService {
 
     }
 
-    public FixedTermDeposit simulateFixedTermDeposit(FixedTermDepositRequest fixedTermRequest, Authentication authentication){
+    public FixedTermDepositResponse simulateFixedTermDeposit(FixedTermDepositRequest fixedTermRequest, Authentication authentication){
 
         //conseguir mail y cuenta en pesos
         User user = (User) authentication.getPrincipal();
@@ -107,7 +107,9 @@ public class FixedTermDepositService {
                 .closingDate(closingDate)
                 .build();
 
-        return fixedTermDeposit;
+        return FixedTermDepositResponse.builder().
+                fixedTermDeposit(fixedTermDeposit).
+                build();
 
     }
 

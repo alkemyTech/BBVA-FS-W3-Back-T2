@@ -23,7 +23,7 @@ public class FixedTermController {
 
 
     @PostMapping("/fixedTerm/simulate")
-    public FixedTermDeposit simulateFixedTermDeposit(@RequestBody @Valid FixedTermDepositRequest fixedTermRequest, Authentication authentication) {
+    public FixedTermDepositResponse simulateFixedTermDeposit(@RequestBody @Valid FixedTermDepositRequest fixedTermRequest, Authentication authentication) {
         return fixedTermDepositService.simulateFixedTermDeposit(fixedTermRequest, authentication);
     }
 
