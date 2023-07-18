@@ -108,7 +108,7 @@ public class TransactionController {
         return (depositService.deposit(depositRequest, authentication));
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     @PreAuthorize("#userId == authentication.principal.id || hasAuthority('ADMIN')")
     public ResponseEntity<?>  getTransactionsById (@PathVariable Long userId, Authentication authentication){
         User user = (User) authentication.getPrincipal();
@@ -126,12 +126,13 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.pay(user, payment));
     }
 
-    @GetMapping("/transactions/{id}")
+    @GetMapping("/{id}")
     public Transaction getTransactionDetail(@PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
         Transaction transaction = transactionService.getTransactionById(id);
+
 
         if (transaction == null) {
             throw new TransactionNotFoundException("Transaction not found");
