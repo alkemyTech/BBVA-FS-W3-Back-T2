@@ -3,6 +3,7 @@ package com.bbva.wallet.controllers;
 import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.exceptions.TransactionNotFoundException;
 import com.bbva.wallet.services.TransactionService;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,10 +43,6 @@ public class TransactionController {
     private JwtService jwtService;
 
     private DepositService depositService;
-
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
 
     private boolean isAdmin(Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

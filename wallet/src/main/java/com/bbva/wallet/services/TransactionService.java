@@ -41,12 +41,6 @@ public class TransactionService {
     private AccountRepository accountRepository;
 
     private RoleRepository roleRepository;
-
-    @Autowired
-    public TransactionService(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
-
     public Transaction getTransactionById(Long id) {
         return transactionRepository.findById(id).orElse(null);
     }
