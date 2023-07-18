@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "6a508e52-b83a-455c-a0d9-b8e62c4edcf6",
+		"_postman_id": "4e675deb-8050-4608-bb6e-c108fa62af61",
 		"name": "T2 - Wallet Copy",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24928275"
+		"_exporter_id": "23155575"
 	},
 	"item": [
 		{
@@ -349,6 +349,40 @@
 							"path": [
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener paginado de cuentas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODk2Mzk4ODEsImV4cCI6MTY4OTY0MTMyMX0.M3vJIEbgO4oRtPpOdA9k_Wi2tWyKAgOVctQHiWv44bI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/accounts?0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null
+								}
 							]
 						}
 					},
