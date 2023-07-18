@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "e84ac276-a500-4e67-ad26-7eebf80703ab",
-		"name": "T2 - Wallet",
+		"_postman_id": "7bf8f1d8-734d-48be-89fd-ef46a62f42b6",
+		"name": "T2 - Wallet Copy",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24928275"
@@ -40,6 +40,17 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().jwt);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -48,7 +59,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"rodri@mail.com\",\n    \"password\": \"pass\"\n}",
+							"raw": "{\n    \"email\": \"rodrigo@gmail.com\",\n    \"password\": \"pass-rodrigo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,6 +88,16 @@
 				{
 					"name": "Soft delete a usuarios pasados por ID (acceso varía según el rol)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -97,6 +118,16 @@
 				{
 					"name": "Obtener detalle de usuario especificado en el endpoint",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -117,6 +148,16 @@
 				{
 					"name": "Actualizar usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -145,6 +186,16 @@
 				{
 					"name": "Obtener todos los usuarios",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -169,6 +220,16 @@
 				{
 					"name": "Obtener Accounts de User según userId pasado por parámetro",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -189,6 +250,16 @@
 				{
 					"name": "Actualizar una cuenta",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -217,6 +288,16 @@
 				{
 					"name": "Obtener balance de cuenta",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -247,6 +328,11 @@
 										"type": "string"
 									},
 									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
 								}
 							]
 						},
@@ -299,6 +385,11 @@
 										"type": "string"
 									},
 									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
 								}
 							]
 						},
@@ -345,6 +436,11 @@
 										"type": "string"
 									},
 									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
 								}
 							]
 						},
@@ -388,6 +484,11 @@
 										"type": "string"
 									},
 									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
 								}
 							]
 						},
@@ -425,7 +526,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTE4MTgxMywiZXhwIjoxNjg5MTgzMjUzfQ.rqQAZPu_gUK_2IRkAlJkFUJIqTFAqE4WX1y2EE9Pxj4",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -469,6 +570,11 @@
 										"type": "string"
 									},
 									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
 								}
 							]
 						},
@@ -497,6 +603,53 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Actualizar transacción",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transactions/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -510,8 +663,17 @@
 							"type": "bearer",
 							"bearer": [
 								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5ODk4NiwiZXhwIjoxNjg5MzAwNDI2fQ.LRlCEgxb3EBv0m6yv_BnUMSgUUVDaaLFMorJuOQEXc0",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
