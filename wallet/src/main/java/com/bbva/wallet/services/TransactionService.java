@@ -1,21 +1,24 @@
 package com.bbva.wallet.services;
 
-import com.bbva.wallet.dtos.Payment;
-import com.bbva.wallet.dtos.PaymentRegister;
+import com.bbva.wallet.dtos.TransactionInputDto;
+import com.bbva.wallet.dtos.UpdateTransactionRequest;
 import com.bbva.wallet.entities.Account;
+import com.bbva.wallet.entities.Role;
+import com.bbva.wallet.dtos.PaymentRequest;
+import com.bbva.wallet.dtos.PaymentResponse;
 import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.enums.TransactionType;
+import com.bbva.wallet.exceptions.NonexistentTransactionException;
+import com.bbva.wallet.exceptions.UserTransactionMismatchException;
+import com.bbva.wallet.exceptions.ProhibitedAccessToTransactionsException;
 import com.bbva.wallet.exceptions.AccountNotFoundException;
 import com.bbva.wallet.exceptions.InsufficientFundsException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import org.springframework.stereotype.Service;
-import com.bbva.wallet.dtos.TransactionInputDto;
-import com.bbva.wallet.entities.Role;
 import com.bbva.wallet.enums.RoleName;
-import com.bbva.wallet.exceptions.ProhibitedAccessToTransactionsException;
 import com.bbva.wallet.repositories.RoleRepository;
 import com.bbva.wallet.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -147,6 +150,24 @@ public class TransactionService {
         return true;
     }
 
+    public Transaction updateTransaction(User user, Long id, UpdateTransactionRequest updateTransactionRequest) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
+
+        if (optionalTransaction.isPresent()) {
+            Transaction transaction = optionalTransaction.get();
+
+            List<Account> accounts = accountRepository.findByUser(user);
+            if (!accounts.isEmpty() && accounts.contains(transaction.getAccount())) {
+                transaction.setDescription(updateTransactionRequest.getDescription());
+                return transactionRepository.save(transaction);
+            } else {
+                throw new UserTransactionMismatchException("La transacción no pertenece al usuario", id);
+            }
+        } else {
+            throw new NonexistentTransactionException("No existen transacciones con el id especificado", id);
+        }
+    }
+
     @GetMapping("/{userId}")
     public List<Transaction> getTransactionsById(Long userId, String email) {
         Optional<User> byEmail = this.userRepository.findByEmail(email);
@@ -174,17 +195,17 @@ public class TransactionService {
                 .build();
     }
 
-    public PaymentRegister pay(User user, Payment payment) {
-        Double amount = payment.getAmount();
-        Currency currency = payment.getCurrency();
-        PaymentRegister paymentRegister = new PaymentRegister();
+    public PaymentResponse pay(User user, PaymentRequest paymentRequest) {
+        Double amount = paymentRequest.getAmount();
+        Currency currency = paymentRequest.getCurrency();
+        PaymentResponse paymentResponse = new PaymentResponse();
         Optional<Account> optionalAccount = accountRepository.findByUserAndCurrency(user, currency);
         optionalAccount.ifPresent(account -> {
             if (account.getBalance() >= amount) {
                 Transaction transaction = buildTransaction(account, amount, TransactionType.PAYMENT, "Payment");
                 account.setBalance(account.getBalance() - amount);
-                paymentRegister.setTransaction(transactionRepository.save(transaction));
-                paymentRegister.setAccount(account);
+                paymentResponse.setTransaction(transactionRepository.save(transaction));
+                paymentResponse.setAccount(account);
             } else {
                 throw new InsufficientFundsException("Fondos insuficientes");
             }
@@ -192,7 +213,7 @@ public class TransactionService {
         if (optionalAccount.isEmpty()) {
             throw new AccountNotFoundException("No se ha encontrado una cuenta en la moneda indicada", currency);
         }
-        return paymentRegister;
+        return paymentResponse;
     }
 
 }
