@@ -1,10 +1,18 @@
 {
 	"info": {
+<<<<<<< HEAD
 		"_postman_id": "490b5aff-9863-4b29-bedc-9cb2f15ae8d4",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23155575"
+=======
+		"_postman_id": "7bf8f1d8-734d-48be-89fd-ef46a62f42b6",
+		"name": "T2 - Wallet Copy",
+		"description": "Caso de Negocio | Wallet | BBVA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24928275"
+>>>>>>> 5cc58e69e00538fbc9ac552d29fe048c63f64e82
 	},
 	"item": [
 		{
@@ -650,6 +658,7 @@
 						}
 					},
 					"response": []
+<<<<<<< HEAD
 				},
 				{
 					"name": "Get transaction",
@@ -679,6 +688,8 @@
 						}
 					},
 					"response": []
+=======
+>>>>>>> 5cc58e69e00538fbc9ac552d29fe048c63f64e82
 				}
 			]
 		},
@@ -729,6 +740,48 @@
 								"fixedTerm"
 							]
 						}
+<<<<<<< HEAD
+=======
+					},
+					"response": []
+				},
+				{
+					"name": "Simular plazo fijo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTU5OTMwMiwiZXhwIjoxNjg5NjAwNzQyfQ.CQmEel9l0iMzEkN0ErLlP_Mef4xgffJCuqd-miIcg1k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"totalDays\" : 30,\r\n    \"amount\" : 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/fixedTerm/simulate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fixedTerm",
+								"simulate"
+							]
+						}
+>>>>>>> 5cc58e69e00538fbc9ac552d29fe048c63f64e82
 					},
 					"response": []
 				}
