@@ -4,8 +4,6 @@ import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bbva.wallet.dtos.Payment;
-import com.bbva.wallet.dtos.PaymentRegister;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.dtos.TransactionInputDto;
 import com.bbva.wallet.dtos.UpdateTransactionRequest;

@@ -1,6 +1,5 @@
 package com.bbva.wallet.controllers;
 
-<<<<<<< HEAD
 import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.exceptions.TransactionNotFoundException;
 import com.bbva.wallet.services.TransactionService;
@@ -11,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import com.bbva.wallet.dtos.Payment;
-import com.bbva.wallet.dtos.PaymentRegister;
 import com.bbva.wallet.entities.User;
-=======
 import com.bbva.wallet.dtos.PaymentRequest;
 import com.bbva.wallet.dtos.PaymentResponse;
 import com.bbva.wallet.entities.User;
@@ -22,7 +18,6 @@ import com.bbva.wallet.services.DepositService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.bbva.wallet.services.TransactionService;
->>>>>>> 5cc58e69e00538fbc9ac552d29fe048c63f64e82
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,12 +34,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.bbva.wallet.services.JwtService;
 
-<<<<<<< HEAD
-
 import java.util.Collection;
 
-=======
->>>>>>> 5cc58e69e00538fbc9ac552d29fe048c63f64e82
 @RestController
 @RequestMapping("/transactions")
 @AllArgsConstructor
