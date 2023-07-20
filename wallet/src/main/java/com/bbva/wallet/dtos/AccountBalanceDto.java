@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class AccountBalance {
+public class AccountBalanceDto {
     private String cbu;
     private Double balance;
 }

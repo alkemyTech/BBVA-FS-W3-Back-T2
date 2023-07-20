@@ -1,6 +1,6 @@
 package com.bbva.wallet.controllers;
 
-import com.bbva.wallet.dtos.UpdateUser;
+import com.bbva.wallet.dtos.UpdateUserRequest;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.services.UserService;
 import jakarta.validation.Valid;
@@ -33,8 +33,8 @@ public class UserController {
 
     @PatchMapping("{id}")
     @PreAuthorize("#id == authentication.principal.id")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody @Valid UpdateUser updateUser) {
-        return ResponseEntity.ok(userService.updateUser(id, updateUser));
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody @Valid UpdateUserRequest updateUserRequest) {
+        return ResponseEntity.ok(userService.updateUser(id, updateUserRequest));
     }
 
     @GetMapping("/{id}")

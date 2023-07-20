@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentRegister {
+public class PaymentResponse {
     private Transaction transaction;
     private Account account;
 }
