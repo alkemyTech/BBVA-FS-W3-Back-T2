@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "7bf8f1d8-734d-48be-89fd-ef46a62f42b6",
+		"_postman_id": "c0181bcd-a3a6-4d84-9702-4f80436b2ce9",
 		"name": "T2 - Wallet Copy",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24928275"
+		"_exporter_id": "23155575"
 	},
 	"item": [
 		{
@@ -637,6 +637,35 @@
 								}
 							}
 						},
+						"url": {
+							"raw": "localhost:8080/transactions/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Visualizar transacción",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODk5NDI1MzgsImV4cCI6MTY4OTk0Mzk3OH0.KweTnEEa-BgwdySTpqs56SzvouCkPy1p2UUlvHFDyQ4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "localhost:8080/transactions/1",
 							"host": [
