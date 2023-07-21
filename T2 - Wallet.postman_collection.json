@@ -1,10 +1,6 @@
 {
 	"info": {
-<<<<<<< HEAD
-		"_postman_id": "4e675deb-8050-4608-bb6e-c108fa62af61",
-=======
-		"_postman_id": "7bf8f1d8-734d-48be-89fd-ef46a62f42b6",
->>>>>>> 5cc58e69e00538fbc9ac552d29fe048c63f64e82
+		"_postman_id": "ee108c6b-ebeb-4fc5-afbd-a5246e096261",
 		"name": "T2 - Wallet Copy",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -420,45 +416,16 @@
 						}
 					},
 					"response": []
-<<<<<<< HEAD
 				},
 				{
-					"name": "Get a user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"arvum@gmail.com\",\r\n    \"password\": \"estaf\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/auth/login",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener paginado de cuentas",
+					"name": "Obtener paginado de accounts",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODk2Mzk4ODEsImV4cCI6MTY4OTY0MTMyMX0.M3vJIEbgO4oRtPpOdA9k_Wi2tWyKAgOVctQHiWv44bI",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODk5NDMxNzgsImV4cCI6MTY4OTk0NDYxOH0.UaQLR3desoA6NkKPE8VsUZihDg5gbxSBYh1I8WwsHRQ",
 									"type": "string"
 								}
 							]
@@ -483,8 +450,6 @@
 						}
 					},
 					"response": []
-=======
->>>>>>> 5cc58e69e00538fbc9ac552d29fe048c63f64e82
 				}
 			]
 		},

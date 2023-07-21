@@ -1,7 +1,6 @@
 package com.bbva.wallet.controllers;
 
 import com.bbva.wallet.dtos.PageAccountResponse;
-import com.bbva.wallet.dtos.UpdateAccount;
 import com.bbva.wallet.dtos.UpdateAccountRequest;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.User;
