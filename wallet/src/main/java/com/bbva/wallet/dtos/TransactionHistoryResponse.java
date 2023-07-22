@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class TransactionHistory {
+public class TransactionHistoryResponse {
     private Currency currency;
     private List<TransactionDto> transactions;
 }

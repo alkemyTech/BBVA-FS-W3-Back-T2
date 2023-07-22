@@ -1,7 +1,6 @@
 package com.bbva.wallet.dtos;
 
 import com.bbva.wallet.entities.FixedTermDeposit;
-import com.bbva.wallet.entities.Transaction;
 import lombok.*;
 
 import java.util.List;
@@ -11,9 +10,9 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class AccountsBalance {
-    private AccountBalance accountArs;
-    private AccountBalance accountUsd;
-    private List<TransactionHistory> history;
+public class AccountsBalanceResponse {
+    private AccountBalanceDto accountArs;
+    private AccountBalanceDto accountUsd;
+    private List<TransactionHistoryResponse> history;
     private List<FixedTermDeposit> fixedTerms;
 }

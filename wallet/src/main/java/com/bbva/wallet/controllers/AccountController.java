@@ -1,16 +1,17 @@
 package com.bbva.wallet.controllers;
 
-import com.bbva.wallet.dtos.UpdateAccount;
+import com.bbva.wallet.dtos.UpdateAccountRequest;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.services.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import com.bbva.wallet.dtos.AccountCreationRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.bbva.wallet.dtos.AccountsBalance;
+import com.bbva.wallet.dtos.AccountsBalanceResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,14 +31,15 @@ public class AccountController {
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("#userId == authentication.principal.id")
     public List<Account> findAccountsByUser (@PathVariable Long userId){
         return accountService.findAccountsByUser(userId);
     }
 
     @PatchMapping("/{accountId}")
-    public ResponseEntity<Account> updateAccount(@PathVariable String accountId, @RequestBody @Valid UpdateAccount updateAccount, Authentication authentication) {
+    public ResponseEntity<Account> updateAccount(@PathVariable String accountId, @RequestBody @Valid UpdateAccountRequest updateAccountRequest, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(accountService.updateAccount(user, accountId, updateAccount));
+        return ResponseEntity.ok(accountService.updateAccount(user, accountId, updateAccountRequest));
     }
 
     @PostMapping
@@ -53,7 +55,7 @@ public class AccountController {
     }
 
     @GetMapping("/balance")
-    public AccountsBalance getBalance(Authentication authentication) {
+    public AccountsBalanceResponse getBalance(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return accountService.getAccountsBalance(user);
     }

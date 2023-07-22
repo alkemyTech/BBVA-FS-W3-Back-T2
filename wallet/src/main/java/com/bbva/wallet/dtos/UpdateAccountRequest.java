@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-public class UpdateAccount {
+public class UpdateAccountRequest {
     @Positive(message = "No se admiten valores negativos")
     private Double transactionLimit;
 }

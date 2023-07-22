@@ -39,9 +39,8 @@ public class Transaction {
     @UpdateTimestamp
     LocalDateTime updatedDate;
 
-
-    @JsonIgnore
     // no deberia estar las 2 cuentas en la clase, voy a suponer que esta es la cuenta receptora
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
