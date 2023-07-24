@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "911f84da-49d2-4671-96f8-b94d25087a59",
-		"name": "T2 - Wallet Copy 2",
+		"_postman_id": "d236cc9e-0ec4-43bd-9223-8db8facc29b2",
+		"name": "T2 - Wallet Copy",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24928275"
@@ -184,7 +184,7 @@
 					"response": []
 				},
 				{
-					"name": "Obtener todos los usuarios",
+					"name": "Obtener usuarios paginados",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -199,7 +199,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users",
+							"raw": "http://localhost:8080/users?page=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -207,6 +207,12 @@
 							"port": "8080",
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
