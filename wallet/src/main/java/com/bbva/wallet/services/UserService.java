@@ -52,7 +52,7 @@ public class UserService {
         }
     }
 
-    public com.bbva.wallet.dtos.PagedUserResponse findAllUsers(int page) {
+    public PagedUserResponse findAllUsers(int page) {
         int pageSize = 2;
         PagedUserResponse pagedUserResponse = new PagedUserResponse();
         Pageable pageable = PageRequest.of(page, pageSize);
