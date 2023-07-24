@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanSimulateResponse {
-    @JsonProperty("CoutasAPagar")
+    @JsonProperty("CuotasAPagar")
     private double monthlyPayments;
 
     @JsonProperty("TotalAPagar")
