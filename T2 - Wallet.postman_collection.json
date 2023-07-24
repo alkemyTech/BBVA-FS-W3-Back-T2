@@ -471,6 +471,35 @@
 					"response": []
 				},
 				{
+					"name": "listar transacciones por id Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAbWFpbC5jb20iLCJpYXQiOjE2ODkxNzc4MDMsImV4cCI6MTY4OTE3OTI0M30.FWMHlA2QRTD2edF557NrE_Gs4OAro9ZrCKuJtG3jfGY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/transactions/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Enviar Dólares",
 					"request": {
 						"auth": {
@@ -733,6 +762,74 @@
 					"response": []
 				},
 				{
+
+					"name": "Transacciones paginadas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2RyaWdvQG1haWwuY29tIiwiaWF0IjoxNjg5MzQzNDY1LCJleHAiOjE2ODkzNDQ5MDV9.UQx7ItnkJxSuKJxwIadyv9v7r3GdC0wRmm6iZygIL0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions?page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/loan",
+			"item": [
+				{
+					"name": "http://localhost:8080/loan/simulate",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2RyaWdvQG1haWwuY29tIiwiaWF0IjoxNjg5MzQzNDY1LCJleHAiOjE2ODkzNDQ5MDV9.UQx7ItnkJxSuKJxwIadyv9v7r3GdC0wRmm6iZygIL0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"deadlines\": 12,\r\n\"amount\":10000\r\n}",
 					"name": "Simular plazo fijo",
 					"request": {
 						"auth": {
@@ -757,6 +854,7 @@
 							}
 						},
 						"url": {
+							"raw": "http://localhost:8080/loan/simulate",
 							"raw": "http://localhost:8080/fixedTerm/simulate",
 							"protocol": "http",
 							"host": [
@@ -764,6 +862,7 @@
 							],
 							"port": "8080",
 							"path": [
+								"loan",
 								"fixedTerm",
 								"simulate"
 							]
