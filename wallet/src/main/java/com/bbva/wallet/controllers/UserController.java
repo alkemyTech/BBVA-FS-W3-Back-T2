@@ -1,15 +1,14 @@
 package com.bbva.wallet.controllers;
 
 import com.bbva.wallet.dtos.PagedUserResponse;
+import com.bbva.wallet.dtos.UpdateUserRequest;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.exceptions.InvalidUrlRequestException;
 import com.bbva.wallet.services.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -34,6 +33,18 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
         }
+    }
+
+    @PatchMapping("{id}")
+    @PreAuthorize("#id == authentication.principal.id")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody @Valid UpdateUserRequest updateUserRequest) {
+        return ResponseEntity.ok(userService.updateUser(id, updateUserRequest));
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("#id == authentication.principal.id || hasAuthority('ADMIN')")
+    public ResponseEntity<User> findUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
 }
