@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "d236cc9e-0ec4-43bd-9223-8db8facc29b2",
-		"name": "T2 - Wallet Copy",
+		"_postman_id": "911f84da-49d2-4671-96f8-b94d25087a59",
+		"name": "T2 - Wallet Copy 2",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "24928275"
@@ -758,7 +758,7 @@
 			]
 		},
 		{
-			"name": "fixedTerm",
+			"name": "/fixedTerm",
 			"item": [
 				{
 					"name": "Crear plazo fijo",
