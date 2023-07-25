@@ -46,6 +46,7 @@ public class DepositService{
                 .name(TransactionType.DEPOSIT)
                 .amount(depositRequest.getAmount())
                 .account(cuenta)
+                .description(depositRequest.getDescription())
                 .build();
         transactionRepository.save(depositTransaction);
 

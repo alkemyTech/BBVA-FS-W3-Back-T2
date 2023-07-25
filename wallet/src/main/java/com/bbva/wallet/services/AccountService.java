@@ -1,24 +1,32 @@
 package com.bbva.wallet.services;
 
 import com.bbva.wallet.dtos.*;
+import com.bbva.wallet.dtos.UpdateAccountRequest;
+import com.bbva.wallet.dtos.AccountBalanceDto;
+import com.bbva.wallet.dtos.AccountsBalanceResponse;
+import com.bbva.wallet.dtos.TransactionDto;
+import com.bbva.wallet.dtos.TransactionHistoryResponse;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.FixedTermDeposit;
 import com.bbva.wallet.entities.User;
-import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.exceptions.*;
+import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.repositories.AccountRepository;
+import com.bbva.wallet.utils.CbuUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 import com.bbva.wallet.repositories.FixedTermDepositRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
-import com.bbva.wallet.utils.CbuUtil;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 @Service
 public class AccountService {
@@ -60,8 +68,8 @@ public class AccountService {
                 .build();
     }
 
-    private AccountBalance buildAccountBalance(Account account) {
-        return AccountBalance.builder()
+    private AccountBalanceDto buildAccountBalance(Account account) {
+        return AccountBalanceDto.builder()
                 .cbu(account.getCbu())
                 .balance(account.getBalance())
                 .build();
@@ -90,7 +98,7 @@ public class AccountService {
         }
     }
 
-    public Account updateAccount(User user, String accountId, UpdateAccount updateAccount) {
+    public Account updateAccount(User user, String accountId, UpdateAccountRequest updateAccountRequest) {
         List<Account> userAccounts = accountRepository.findByUser(user);
         Optional<Account> optionalAccount = accountRepository.findById(accountId);
 
@@ -108,45 +116,76 @@ public class AccountService {
             throw new UserAccountMismatchException("La cuenta no pertenece al usuario especificado", accountId);
         }
 
-        account.setTransactionLimit(updateAccount.getTransactionLimit());
+        account.setTransactionLimit(updateAccountRequest.getTransactionLimit());
         return accountRepository.save(account);
     }
 
-    public AccountsBalance getAccountsBalance(User user) {
+    public AccountsBalanceResponse getAccountsBalance(User user) {
         if (user.isSoftDelete()) {
             throw new DeletedUserException("El usuario ha sido eliminado", user.getEmail());
         } else {
             List<Account> activeAccounts = accountRepository.findByUser(user);
-            List<TransactionHistory> transactionHistory = new ArrayList<>();
-            AccountsBalance accountsBalance = new AccountsBalance();
+            List<TransactionHistoryResponse> transactionHistoryResponse = new ArrayList<>();
+            AccountsBalanceResponse accountsBalanceResponse = new AccountsBalanceResponse();
             Optional<Account> optionalAccountArs = filterAccountsByCurrency(activeAccounts, Currency.ARS);
             Optional<Account> optionalAccountUsd = filterAccountsByCurrency(activeAccounts, Currency.USD);
 
             if (optionalAccountArs.isPresent()) {
                 Account accountArs = optionalAccountArs.get();
-                AccountBalance accountBalanceArs = buildAccountBalance(accountArs);
-                accountsBalance.setAccountArs(accountBalanceArs);
+                AccountBalanceDto accountBalanceDtoArs = buildAccountBalance(accountArs);
+                accountsBalanceResponse.setAccountArs(accountBalanceDtoArs);
 
                 List<TransactionDto> transactionArsDto = getTransactionsDto(accountArs);
-                TransactionHistory transactionHistoryArs = new TransactionHistory(Currency.ARS, transactionArsDto);
-                transactionHistory.add(transactionHistoryArs);
+                TransactionHistoryResponse transactionHistoryResponseArs = new TransactionHistoryResponse(Currency.ARS, transactionArsDto);
+                transactionHistoryResponse.add(transactionHistoryResponseArs);
 
                 List<FixedTermDeposit> fixedTermDepositsArs = fixedTermDepositRepository.findByAccount(accountArs);
-                accountsBalance.setFixedTerms(fixedTermDepositsArs);
+                accountsBalanceResponse.setFixedTerms(fixedTermDepositsArs);
             }
 
             if (optionalAccountUsd.isPresent()) {
                 Account accountUsd = optionalAccountUsd.get();
-                AccountBalance accountBalanceUsd = buildAccountBalance(accountUsd);
-                accountsBalance.setAccountUsd(accountBalanceUsd);
+                AccountBalanceDto accountBalanceDtoUsd = buildAccountBalance(accountUsd);
+                accountsBalanceResponse.setAccountUsd(accountBalanceDtoUsd);
 
                 List<TransactionDto> transactionUsdDto = getTransactionsDto(accountUsd);
-                TransactionHistory transactionHistoryUsd = new TransactionHistory(Currency.USD, transactionUsdDto);
-                transactionHistory.add(transactionHistoryUsd);
+                TransactionHistoryResponse transactionHistoryResponseUsd = new TransactionHistoryResponse(Currency.USD, transactionUsdDto);
+                transactionHistoryResponse.add(transactionHistoryResponseUsd);
             }
-            accountsBalance.setHistory(transactionHistory);
-            return accountsBalance;
+            accountsBalanceResponse.setHistory(transactionHistoryResponse);
+            return accountsBalanceResponse;
         }
     }
+
+    public PageAccountResponse findAllAccounts(int page) {
+        int pageSize = 10;
+        PageAccountResponse pageAccountResponse = new PageAccountResponse();
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        //contenido de página
+        Page<Account> accountsPage = accountRepository.findAll(pageable);
+        pageAccountResponse.setAccounts(accountsPage.getContent().stream().map(AccountDto:: new).toList());
+
+        //valida que la página tenga contenido
+        if(pageAccountResponse.getAccounts().size() == 0)
+            throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
+
+        //url de página siguiente
+        if (accountsPage.hasNext()) {
+            int nextPage = accountsPage.getNumber() + 1;
+            String nextPageUrl = "/accounts?page=" + nextPage;
+            pageAccountResponse.setNextPageUrl(nextPageUrl);
+        }
+
+        //url de página anterior
+        if (accountsPage.hasPrevious()) {
+            int previousPage = accountsPage.getNumber() - 1;
+            String previousPageUrl = "/accounts?page=" + previousPage;
+            pageAccountResponse.setPreviousPageUrl(previousPageUrl);
+        }
+
+        return pageAccountResponse;
+    }
+
 }
 
