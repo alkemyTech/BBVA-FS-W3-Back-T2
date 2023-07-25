@@ -4,7 +4,7 @@
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23155575"
+		"_exporter_id": "24928275"
 	},
 	"item": [
 		{
@@ -488,7 +488,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10\r\n}",
+							"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10,\r\n    \"description\": \"descripción opcional\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
