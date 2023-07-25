@@ -6,3 +6,4 @@ public class InvalidUrlRequestException extends RuntimeException {
     }
 
 }
+

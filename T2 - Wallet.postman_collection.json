@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ee108c6b-ebeb-4fc5-afbd-a5246e096261",
-		"name": "T2 - Wallet Copy",
+		"_postman_id": "0faab4e8-d32e-4493-8b09-54aba15db66e",
+		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "23155575"
@@ -184,7 +184,7 @@
 					"response": []
 				},
 				{
-					"name": "Obtener todos los usuarios",
+					"name": "Obtener usuarios paginados",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -199,7 +199,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/users",
+							"raw": "http://localhost:8080/users?page=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -207,6 +207,12 @@
 							"port": "8080",
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -418,14 +424,14 @@
 					"response": []
 				},
 				{
-					"name": "Obtener paginado de accounts",
+					"name": "paginado accounts",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODk5NDMxNzgsImV4cCI6MTY4OTk0NDYxOH0.UaQLR3desoA6NkKPE8VsUZihDg5gbxSBYh1I8WwsHRQ",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImlhdCI6MTY5MDI4NzM3MSwiZXhwIjoxNjkwMjg4ODExfQ.Rf0q3osaDumKHSrVHvQoIpYVblwcc1J6SU-TpvV5pys",
 									"type": "string"
 								}
 							]
@@ -499,6 +505,35 @@
 							"path": [
 								"transactions",
 								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar transacciones por id Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAbWFpbC5jb20iLCJpYXQiOjE2ODkxNzc4MDMsImV4cCI6MTY4OTE3OTI0M30.FWMHlA2QRTD2edF557NrE_Gs4OAro9ZrCKuJtG3jfGY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/transactions/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"2"
 							]
 						}
 					},
@@ -684,11 +719,86 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Visualizar transacción",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODk5NDI1MzgsImV4cCI6MTY4OTk0Mzk3OH0.KweTnEEa-BgwdySTpqs56SzvouCkPy1p2UUlvHFDyQ4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/transactions/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transacciones paginadas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2RyaWdvQG1haWwuY29tIiwiaWF0IjoxNjg5MzQzNDY1LCJleHAiOjE2ODkzNDQ5MDV9.UQx7ItnkJxSuKJxwIadyv9v7r3GdC0wRmm6iZygIL0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions?page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "fixedTerm",
+			"name": "/fixedTerm",
 			"item": [
 				{
 					"name": "Crear plazo fijo",
@@ -745,7 +855,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTU5OTMwMiwiZXhwIjoxNjg5NjAwNzQyfQ.CQmEel9l0iMzEkN0ErLlP_Mef4xgffJCuqd-miIcg1k",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -770,6 +880,59 @@
 							"port": "8080",
 							"path": [
 								"fixedTerm",
+								"simulate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/loan",
+			"item": [
+				{
+					"name": "Simular préstamo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"installments\": 30,\r\n    \"amount\": 2000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/loan/simulate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loan",
 								"simulate"
 							]
 						}
