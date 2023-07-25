@@ -1,8 +1,10 @@
 package com.bbva.wallet.controllers;
 
+import com.bbva.wallet.dtos.PageAccountResponse;
 import com.bbva.wallet.dtos.UpdateAccountRequest;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.User;
+import com.bbva.wallet.exceptions.InvalidUrlRequestException;
 import com.bbva.wallet.services.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +60,15 @@ public class AccountController {
     public AccountsBalanceResponse getBalance(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return accountService.getAccountsBalance(user);
+    }
+
+    @GetMapping("")
+    public PageAccountResponse findAllAccounts(@RequestParam(defaultValue = "0") int page) {
+        try {
+            return accountService.findAllAccounts(page);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
+        }
     }
 
 }

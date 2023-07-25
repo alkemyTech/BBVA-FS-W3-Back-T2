@@ -1,5 +1,6 @@
 package com.bbva.wallet.dtos;
 
+import com.bbva.wallet.entities.Account;
 import lombok.*;
 
 @NoArgsConstructor

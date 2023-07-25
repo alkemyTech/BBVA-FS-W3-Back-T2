@@ -1,5 +1,6 @@
 package com.bbva.wallet.services;
 
+import com.bbva.wallet.dtos.*;
 import com.bbva.wallet.dtos.UpdateAccountRequest;
 import com.bbva.wallet.dtos.AccountBalanceDto;
 import com.bbva.wallet.dtos.AccountsBalanceResponse;
@@ -8,21 +9,20 @@ import com.bbva.wallet.dtos.TransactionHistoryResponse;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.FixedTermDeposit;
 import com.bbva.wallet.entities.User;
-import com.bbva.wallet.exceptions.InexistentAccountException;
-import com.bbva.wallet.exceptions.NoUserAccountsException;
-import com.bbva.wallet.exceptions.UserAccountMismatchException;
+import com.bbva.wallet.exceptions.*;
 import com.bbva.wallet.enums.Currency;
-import com.bbva.wallet.exceptions.AccountCreationException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.utils.CbuUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import com.bbva.wallet.exceptions.DeletedUserException;
 import com.bbva.wallet.repositories.FixedTermDepositRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -156,5 +156,36 @@ public class AccountService {
             return accountsBalanceResponse;
         }
     }
+
+    public PageAccountResponse findAllAccounts(int page) {
+        int pageSize = 10;
+        PageAccountResponse pageAccountResponse = new PageAccountResponse();
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        //contenido de página
+        Page<Account> accountsPage = accountRepository.findAll(pageable);
+        pageAccountResponse.setAccounts(accountsPage.getContent().stream().map(AccountDto:: new).toList());
+
+        //valida que la página tenga contenido
+        if(pageAccountResponse.getAccounts().size() == 0)
+            throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
+
+        //url de página siguiente
+        if (accountsPage.hasNext()) {
+            int nextPage = accountsPage.getNumber() + 1;
+            String nextPageUrl = "/accounts?page=" + nextPage;
+            pageAccountResponse.setNextPageUrl(nextPageUrl);
+        }
+
+        //url de página anterior
+        if (accountsPage.hasPrevious()) {
+            int previousPage = accountsPage.getNumber() - 1;
+            String previousPageUrl = "/accounts?page=" + previousPage;
+            pageAccountResponse.setPreviousPageUrl(previousPageUrl);
+        }
+
+        return pageAccountResponse;
+    }
+
 }
 

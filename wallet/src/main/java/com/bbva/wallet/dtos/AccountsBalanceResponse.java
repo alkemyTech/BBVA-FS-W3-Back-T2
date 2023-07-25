@@ -1,5 +1,6 @@
 package com.bbva.wallet.dtos;
 
+import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.FixedTermDeposit;
 import lombok.*;
 
@@ -15,4 +16,6 @@ public class AccountsBalanceResponse {
     private AccountBalanceDto accountUsd;
     private List<TransactionHistoryResponse> history;
     private List<FixedTermDeposit> fixedTerms;
+
+
 }
