@@ -44,27 +44,27 @@ public class TransactionService {
 
     @SneakyThrows
     @Transactional
-    public boolean sendArs(String username, TransactionInputDto Receiver) {
+    public Transaction sendArs(String username, TransactionRequestDTO Receiver) {
 
 
-        var SenderUser = userRepository.findByEmail(username).get();
-        var SenderAccount = accountRepository.findByUserAndCurrency(SenderUser, Currency.ARS).get();
-        var ReceiverAccount = accountRepository.findById(Receiver.getCbu()).get();
+        var senderUser = userRepository.findByEmail(username).get();
+        var senderAccount = accountRepository.findByUserAndCurrency(senderUser, Currency.ARS).get();
+        var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
 
-        if (ReceiverAccount.getCurrency() != Currency.ARS) {
+        if (receiverAccount.getCurrency() != Currency.ARS){
             throw new Exception("no es una cuenta en Pesos");
         }
 
 
-        if (SenderAccount.getUser() == ReceiverAccount.getUser()) {
+        if (senderAccount.getUser() == receiverAccount.getUser()){
             throw new Exception("no se puede enviar transactiones al mismo usuario");
         }
 
-        if (SenderAccount.getBalance() < Receiver.getAmount()) {
+        if (senderAccount.getBalance()<Receiver.getAmount()){
             throw new Exception("saldo insuficiente");
         }
 
-        var Description = "transaction del cbu: " + SenderAccount.getCbu() + " al cbu: " + ReceiverAccount.getCbu();
+        var Description = "transaction del cbu: "+senderAccount.getCbu()+ " al cbu: "+receiverAccount.getCbu();
 
         var payerTransaction = new Transaction();
 
@@ -72,7 +72,7 @@ public class TransactionService {
         payerTransaction.setCreationDate(LocalDateTime.now());
         payerTransaction.setUpdatedDate(LocalDateTime.now());
         payerTransaction.setName(TransactionType.PAYMENT);
-        payerTransaction.setAccount(SenderAccount);
+        payerTransaction.setAccount(senderAccount);
         payerTransaction.setDescription(Description);
 
 
@@ -82,44 +82,45 @@ public class TransactionService {
         incomeTransaction.setCreationDate(LocalDateTime.now());
         incomeTransaction.setUpdatedDate(LocalDateTime.now());
         incomeTransaction.setName(TransactionType.INCOME);
-        incomeTransaction.setAccount(ReceiverAccount);
+        incomeTransaction.setAccount(receiverAccount);
         incomeTransaction.setDescription(Description);
 
         transactionRepository.save(payerTransaction);
         transactionRepository.save(incomeTransaction);
 
-        SenderAccount.setBalance(SenderAccount.getBalance() - Receiver.getAmount());
-        ReceiverAccount.setBalance(ReceiverAccount.getBalance() + Receiver.getAmount());
 
-        accountRepository.save(SenderAccount);
-        accountRepository.save(ReceiverAccount);
+        senderAccount.setBalance(senderAccount.getBalance()-Receiver.getAmount());
+        receiverAccount.setBalance(receiverAccount.getBalance()+Receiver.getAmount());
 
-        return true;
+        accountRepository.save(senderAccount);
+        accountRepository.save(receiverAccount);
+
+        return payerTransaction;
     }
 
     @SneakyThrows
     @Transactional
-    public boolean sendUsd(String username, TransactionInputDto Receiver) {
+    public Transaction sendUsd(String username, TransactionRequestDTO Receiver) {
 
 
-        var SenderUser = userRepository.findByEmail(username).get();
-        var SenderAccount = accountRepository.findByUserAndCurrency(SenderUser, Currency.USD).get();
-        var ReceiverAccount = accountRepository.findById(Receiver.getCbu()).get();
+        var senderUser = userRepository.findByEmail(username).get();
+        var senderAccount = accountRepository.findByUserAndCurrency(senderUser, Currency.USD).get();
+        var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
 
-        if (ReceiverAccount.getCurrency() != Currency.USD) {
+        if (receiverAccount.getCurrency() != Currency.USD){
             throw new Exception("no es una cuenta en Pesos");
         }
 
 
-        if (SenderAccount.getUser() == ReceiverAccount.getUser()) {
+        if (senderAccount.getUser() == receiverAccount.getUser()){
             throw new Exception("no se puede enviar transactiones al mismo usuario");
         }
 
-        if (SenderAccount.getBalance() < Receiver.getAmount()) {
+        if (senderAccount.getBalance()<Receiver.getAmount()){
             throw new Exception("saldo insuficiente");
         }
 
-        var Description = "transaction del cbu: " + SenderAccount.getCbu() + " al cbu: " + ReceiverAccount.getCbu();
+        var Description = "transaction del cbu: "+senderAccount.getCbu()+ " al cbu: "+receiverAccount.getCbu();
 
         var payerTransaction = new Transaction();
 
@@ -127,7 +128,7 @@ public class TransactionService {
         payerTransaction.setCreationDate(LocalDateTime.now());
         payerTransaction.setUpdatedDate(LocalDateTime.now());
         payerTransaction.setName(TransactionType.PAYMENT);
-        payerTransaction.setAccount(SenderAccount);
+        payerTransaction.setAccount(senderAccount);
         payerTransaction.setDescription(Description);
 
 
@@ -137,19 +138,19 @@ public class TransactionService {
         incomeTransaction.setCreationDate(LocalDateTime.now());
         incomeTransaction.setUpdatedDate(LocalDateTime.now());
         incomeTransaction.setName(TransactionType.INCOME);
-        incomeTransaction.setAccount(ReceiverAccount);
+        incomeTransaction.setAccount(receiverAccount);
         incomeTransaction.setDescription(Description);
 
         transactionRepository.save(payerTransaction);
         transactionRepository.save(incomeTransaction);
 
-        SenderAccount.setBalance(SenderAccount.getBalance() - Receiver.getAmount());
-        ReceiverAccount.setBalance(ReceiverAccount.getBalance() + Receiver.getAmount());
+        senderAccount.setBalance(senderAccount.getBalance()-Receiver.getAmount());
+        receiverAccount.setBalance(receiverAccount.getBalance()+Receiver.getAmount());
 
-        accountRepository.save(SenderAccount);
-        accountRepository.save(ReceiverAccount);
+        accountRepository.save(senderAccount);
+        accountRepository.save(receiverAccount);
 
-        return true;
+        return payerTransaction;
     }
 
     public Transaction updateTransaction(User user, Long id, UpdateTransactionRequest updateTransactionRequest) {
@@ -230,7 +231,7 @@ public class TransactionService {
 
         //contenido de página
         Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
-        pageTransactionResponse.setTransactions(transactionsPage.getContent().stream().map(TransactionDto:: new).toList());
+        pageTransactionResponse.setTransactions(transactionsPage.getContent().stream().map(TransactionResponseDTO:: new).toList());
 
         //valida que la página tenga contenido
         if(pageTransactionResponse.getTransactions().size() == 0)

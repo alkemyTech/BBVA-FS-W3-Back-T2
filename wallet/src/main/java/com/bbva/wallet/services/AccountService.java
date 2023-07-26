@@ -4,7 +4,7 @@ import com.bbva.wallet.dtos.*;
 import com.bbva.wallet.dtos.UpdateAccountRequest;
 import com.bbva.wallet.dtos.AccountBalanceDto;
 import com.bbva.wallet.dtos.AccountsBalanceResponse;
-import com.bbva.wallet.dtos.TransactionDto;
+import com.bbva.wallet.dtos.TransactionResponseDTO;
 import com.bbva.wallet.dtos.TransactionHistoryResponse;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.FixedTermDeposit;
@@ -75,10 +75,10 @@ public class AccountService {
                 .build();
     }
 
-    private List<TransactionDto> getTransactionsDto(Account account) {
+    private List<TransactionResponseDTO> getTransactionsDto(Account account) {
         return transactionRepository.findByAccount(account)
                 .stream()
-                .map(TransactionDto::new)
+                .map(TransactionResponseDTO::new)
                 .toList();
     }
 
@@ -135,7 +135,7 @@ public class AccountService {
                 AccountBalanceDto accountBalanceDtoArs = buildAccountBalance(accountArs);
                 accountsBalanceResponse.setAccountArs(accountBalanceDtoArs);
 
-                List<TransactionDto> transactionArsDto = getTransactionsDto(accountArs);
+                List<TransactionResponseDTO> transactionArsDto = getTransactionsDto(accountArs);
                 TransactionHistoryResponse transactionHistoryResponseArs = new TransactionHistoryResponse(Currency.ARS, transactionArsDto);
                 transactionHistoryResponse.add(transactionHistoryResponseArs);
 
@@ -148,7 +148,7 @@ public class AccountService {
                 AccountBalanceDto accountBalanceDtoUsd = buildAccountBalance(accountUsd);
                 accountsBalanceResponse.setAccountUsd(accountBalanceDtoUsd);
 
-                List<TransactionDto> transactionUsdDto = getTransactionsDto(accountUsd);
+                List<TransactionResponseDTO> transactionUsdDto = getTransactionsDto(accountUsd);
                 TransactionHistoryResponse transactionHistoryResponseUsd = new TransactionHistoryResponse(Currency.USD, transactionUsdDto);
                 transactionHistoryResponse.add(transactionHistoryResponseUsd);
             }
