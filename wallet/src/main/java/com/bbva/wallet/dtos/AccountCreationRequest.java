@@ -1,16 +1,15 @@
 package com.bbva.wallet.dtos;
 
 import com.bbva.wallet.enums.Currency;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
 @Setter
-public class TransactionHistory {
+public class AccountCreationRequest {
     private Currency currency;
-    private List<TransactionDto> transactions;
 }

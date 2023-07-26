@@ -11,13 +11,11 @@ import com.bbva.wallet.exceptions.AccountNotFoundException;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.repositories.TransactionRepository;
 import com.bbva.wallet.repositories.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DepositService{
@@ -48,6 +46,7 @@ public class DepositService{
                 .name(TransactionType.DEPOSIT)
                 .amount(depositRequest.getAmount())
                 .account(cuenta)
+                .description(depositRequest.getDescription())
                 .build();
         transactionRepository.save(depositTransaction);
 
@@ -64,7 +63,7 @@ public class DepositService{
         return userAccounts.stream()
                 .filter(c -> c.getCurrency() == currency && !c.isSoftDelete())
                 .findAny()
-                .orElseThrow(() -> new AccountNotFoundException("El usuario no tiene una cuenta en " + currency, user.getId()));
+                .orElseThrow(() -> new AccountNotFoundException("El usuario no tiene una cuenta en " + currency, currency));
 
     }
 
