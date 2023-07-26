@@ -1,5 +1,6 @@
 package com.bbva.wallet.dtos;
 
+import com.bbva.wallet.entities.Account;
 import lombok.*;
 
 @NoArgsConstructor
@@ -7,7 +8,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class AccountBalance {
+public class AccountBalanceDto {
     private String cbu;
     private Double balance;
 }

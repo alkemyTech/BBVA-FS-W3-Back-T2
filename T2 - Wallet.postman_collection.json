@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "68101844-d615-4bc0-967b-708c6ec738a5",
+		"_postman_id": "0faab4e8-d32e-4493-8b09-54aba15db66e",
 		"name": "T2 - Wallet",
 		"description": "Caso de Negocio | Wallet | BBVA",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "23524429"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24928275"
 	},
 	"item": [
 		{
@@ -40,6 +40,17 @@
 				},
 				{
 					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().jwt);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -48,7 +59,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"rodri@mail.com\",\n    \"password\": \"pass\"\n}",
+							"raw": "{\n    \"email\": \"rodrigo@gmail.com\",\n    \"password\": \"pass-rodrigo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,27 +88,133 @@
 				{
 					"name": "Soft delete a usuarios pasados por ID (acceso varía según el rol)",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:8080/users/3"
+						"url": {
+							"raw": "http://localhost:8080/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"3"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Obtener detalle de usuario especificado en el endpoint",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users/1"
+						"url": {
+							"raw": "http://localhost:8080/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "Obtener todos los usuarios",
+					"name": "Actualizar usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Rodri\",\n    \"lastName\": \"Juarez\",\n    \"password\": \"pass\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener usuarios paginados",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/users"
+						"url": {
+							"raw": "http://localhost:8080/users?page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -109,15 +226,46 @@
 				{
 					"name": "Obtener Accounts de User según userId pasado por parámetro",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:8080/accounts/1"
+						"url": {
+							"raw": "http://localhost:8080/accounts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Actualizar una cuenta",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -129,13 +277,33 @@
 								}
 							}
 						},
-						"url": "localhost:8080/accounts/1234567890123456789012"
+						"url": {
+							"raw": "localhost:8080/accounts/1234567890123456789012",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"accounts",
+								"1234567890123456789012"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Obtener balance de cuenta",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -159,8 +327,17 @@
 							"type": "bearer",
 							"bearer": [
 								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -207,8 +384,17 @@
 							"type": "bearer",
 							"bearer": [
 								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODkyNjczMjUsImV4cCI6MTY4OTI2ODc2NX0.D5sbZaF0tA_wm6yio4UMkAlo5mEJAaamNaizjiZF7Eg",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -238,28 +424,34 @@
 					"response": []
 				},
 				{
-					"name": "Get a user",
+					"name": "paginado accounts",
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"arvum@gmail.com\",\r\n    \"password\": \"estaf\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsImlhdCI6MTY5MDI4NzM3MSwiZXhwIjoxNjkwMjg4ODExfQ.Rf0q3osaDumKHSrVHvQoIpYVblwcc1J6SU-TpvV5pys",
+									"type": "string"
 								}
-							}
+							]
 						},
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "localhost:8080/auth/login",
+							"raw": "localhost:8080/accounts?0",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"auth",
-								"login"
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null
+								}
 							]
 						}
 					},
@@ -277,8 +469,17 @@
 							"type": "bearer",
 							"bearer": [
 								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -287,7 +488,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10\r\n}",
+							"raw": "{\r\n    \"currency\" : \"USD\",\r\n    \"amount\" : 10,\r\n    \"description\": \"descripción opcional\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -310,14 +511,52 @@
 					"response": []
 				},
 				{
+					"name": "Listar transacciones por id Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAbWFpbC5jb20iLCJpYXQiOjE2ODkxNzc4MDMsImV4cCI6MTY4OTE3OTI0M30.FWMHlA2QRTD2edF557NrE_Gs4OAro9ZrCKuJtG3jfGY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/transactions/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Enviar Dólares",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -349,14 +588,61 @@
 					"response": []
 				},
 				{
-					"name": "Enviar Pesos",
+					"name": "Payment",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 180,\n    \"currency\": \"ARS\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transactions/payment",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar Pesos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -382,6 +668,272 @@
 							"path": [
 								"transactions",
 								"send_ars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar transacción",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/transactions/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Visualizar transacción",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhcnZ1bUBnbWFpbC5jb20iLCJpYXQiOjE2ODk5NDI1MzgsImV4cCI6MTY4OTk0Mzk3OH0.KweTnEEa-BgwdySTpqs56SzvouCkPy1p2UUlvHFDyQ4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/transactions/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transacciones paginadas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2RyaWdvQG1haWwuY29tIiwiaWF0IjoxNjg5MzQzNDY1LCJleHAiOjE2ODkzNDQ5MDV9.UQx7ItnkJxSuKJxwIadyv9v7r3GdC0wRmm6iZygIL0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transactions?page=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/fixedTerm",
+			"item": [
+				{
+					"name": "Crear plazo fijo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\" : 500,\r\n    \"totalDays\":30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/fixedTerm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fixedTerm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simular plazo fijo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"totalDays\" : 30,\r\n    \"amount\" : 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/fixedTerm/simulate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"fixedTerm",
+								"simulate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/loan",
+			"item": [
+				{
+					"name": "Simular préstamo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZW51QGdtYWlsLmNvbSIsImlhdCI6MTY4OTA5Mzc3MywiZXhwIjoxNjg5MDk1MjEzfQ.fu8EQxNdrISK_w4SVacPae7vKIM5KFck704jrZoGOAw",
+										"type": "string"
+									},
+									"type": "any"
+								},
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"installments\": 30,\r\n    \"amount\": 2000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/loan/simulate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"loan",
+								"simulate"
 							]
 						}
 					},

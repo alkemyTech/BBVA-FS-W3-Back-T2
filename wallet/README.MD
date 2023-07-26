@@ -18,6 +18,10 @@ Se han generado usuarios de prueba para facilitar el uso y la evaluación del si
     - Condiciones de ejecución: Se ejecuta solo si no existen registros en la tabla `accounts`.
     - Propósito: Crea las cuentas de prueba para los primeros diez usuarios con el rol de "Usuario", simulando saldos en diferentes monedas y límites de transacción.
 
+4. Script `TransactionSeeder`:
+    - Condiciones de ejecución: Se ejecuta solo si no existen registros en la tabla `transactions`.
+    - Propósito: Crea transacciones de prueba con campos relevantes, como el tipo de transacción, el monto y las cuentas involucradas, para simular diferentes escenarios y probar la funcionalidad de transacciones del sistema.
+
 Estos scripts se ejecutan en el orden mencionado, asegurando que los datos de prueba se generen correctamente y las relaciones entre usuarios, roles y cuentas se establezcan adecuadamente.
 
 Es importante tener en cuenta que, al iniciar la aplicación por primera vez, los datos de prueba se generarán automáticamente y estarán disponibles para su uso. Si se realizan cambios en los datos de prueba o se necesitan más datos adicionales, es posible modificar los scripts correspondientes según las necesidades del proyecto.
@@ -157,3 +161,9 @@ Los roles de prueba se utilizan para asignar permisos y controlar el acceso a la
 Se han generado cuentas de prueba para los primeros diez usuarios con el rol de "Usuario". Estas cuentas simulan la funcionalidad de tener saldos en diferentes monedas y límites de transacción. 
 
 Estos datos de prueba te permiten trabajar con cuentas y simular transacciones en diferentes monedas con límites de transacción personalizados. Podés utilizar estas cuentas para probar y evaluar la funcionalidad del sistema.
+
+## Transacciones
+
+Se han generado transacciones de prueba con campos relevantes, como el tipo de transacción, el monto y las cuentas involucradas. Estas transacciones simulan diferentes escenarios y permiten probar la funcionalidad de transacciones del sistema.
+
+A partir de estos datos podés trabajar con transacciones y evaluar la respuesta del sistema en diferentes situaciones.
