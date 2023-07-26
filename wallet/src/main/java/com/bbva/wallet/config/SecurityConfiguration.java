@@ -80,7 +80,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers(
                                         "/auth/**", "/swagger-ui/**", "/swagger-resources/*",
-                                        "/v3/api-docs/**", "/error")
+                                        "/v3/api-docs/**", "/api/docs/**", "/error")
                                 .permitAll()
                                 .requestMatchers("/users").hasAuthority(RoleName.ADMIN.name())
                                 .requestMatchers(HttpMethod.GET, "/accounts").hasAuthority(RoleName.ADMIN.name())
@@ -93,4 +93,3 @@ public class SecurityConfiguration {
     }
 
 }
-
