@@ -24,6 +24,6 @@ public class DepositRequest {
     private Double amount;
 
     @Nullable
-    @Size(max = 100)
+    @Size(max=100)
     private String description;
 }
