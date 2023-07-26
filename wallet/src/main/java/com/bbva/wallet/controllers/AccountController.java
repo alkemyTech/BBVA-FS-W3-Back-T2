@@ -33,7 +33,7 @@ public class AccountController {
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("#userId == authentication.principal.id")
+    @PreAuthorize("#userId == authentication.principal.id || hasAuthority('ADMIN')")
     public List<Account> findAccountsByUser (@PathVariable Long userId){
         return accountService.findAccountsByUser(userId);
     }
