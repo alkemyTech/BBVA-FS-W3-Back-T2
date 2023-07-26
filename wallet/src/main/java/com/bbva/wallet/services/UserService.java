@@ -1,24 +1,25 @@
 package com.bbva.wallet.services;
 
 import com.bbva.wallet.dtos.PagedUserResponse;
+import com.bbva.wallet.dtos.RegisterRequest;
+import com.bbva.wallet.dtos.UpdateUserRequest;
+import com.bbva.wallet.entities.Role;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.exceptions.InvalidUrlRequestException;
-import com.bbva.wallet.dtos.UpdateUserRequest;
 import com.bbva.wallet.exceptions.UserNotFoundException;
+import com.bbva.wallet.repositories.RoleRepository;
 import com.bbva.wallet.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.bbva.wallet.dtos.RegisterRequest;
-import com.bbva.wallet.entities.Role;
-import com.bbva.wallet.repositories.RoleRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import java.util.Optional;
+
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

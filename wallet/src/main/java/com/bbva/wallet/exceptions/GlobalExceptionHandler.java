@@ -151,6 +151,5 @@ public class GlobalExceptionHandler {
         response.setData("id: " + String.valueOf(ex.getId()));
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-
 }
 

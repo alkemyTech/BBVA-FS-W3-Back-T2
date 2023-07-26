@@ -1,38 +1,26 @@
 package com.bbva.wallet.controllers;
 
+import com.bbva.wallet.dtos.*;
 import com.bbva.wallet.entities.Transaction;
+import com.bbva.wallet.entities.User;
+import com.bbva.wallet.exceptions.InvalidUrlRequestException;
 import com.bbva.wallet.exceptions.TransactionNotFoundException;
+import com.bbva.wallet.services.DepositService;
+import com.bbva.wallet.services.JwtService;
 import com.bbva.wallet.services.TransactionService;
-import lombok.NoArgsConstructor;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import com.bbva.wallet.entities.User;
-import com.bbva.wallet.dtos.PaymentRequest;
-import com.bbva.wallet.dtos.PaymentResponse;
-import com.bbva.wallet.entities.User;
-import com.bbva.wallet.services.DepositService;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import com.bbva.wallet.services.TransactionService;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import com.bbva.wallet.dtos.DepositRequest;
-import com.bbva.wallet.dtos.DepositResponse;
-import com.bbva.wallet.dtos.TransactionInputDto;
-import com.bbva.wallet.dtos.UpdateTransactionRequest;
-import com.bbva.wallet.entities.Transaction;
-import io.jsonwebtoken.*;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.bbva.wallet.services.JwtService;
 
 import java.util.Collection;
 
@@ -45,7 +33,6 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     private JwtService jwtService;
-
     private DepositService depositService;
 
     private boolean isAdmin(Authentication authentication) {
@@ -126,6 +113,7 @@ public class TransactionController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+
     }
 
     @PostMapping("/payment")
@@ -150,8 +138,17 @@ public class TransactionController {
             throw new TransactionNotFoundException("Access denied");
         }
 
+
         return transaction;
 
     }
-}
 
+@GetMapping("")
+public PageTransactionResponse findAllUsers(@RequestParam(defaultValue = "0") int page) {
+        try {
+        return transactionService.findAllTransaction(page);
+        } catch (IllegalArgumentException e) {
+        throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
+        }
+        }
+        }
