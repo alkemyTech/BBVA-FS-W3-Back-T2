@@ -210,16 +210,20 @@ public class TransactionService {
     }
 
     public PaymentResponse pay(User user, PaymentRequest paymentRequest) {
+
         Double amount = paymentRequest.getAmount();
         Currency currency = paymentRequest.getCurrency();
+        String description = paymentRequest.getDescription();
+
         PaymentResponse paymentResponse = new PaymentResponse();
         Optional<Account> optionalAccount = accountRepository.findByUserAndCurrency(user, currency);
         optionalAccount.ifPresent(account -> {
             if (account.getBalance() >= amount) {
-                Transaction transaction = buildTransaction(account, amount, TransactionType.PAYMENT, "Payment");
+                Transaction transaction = buildTransaction(account, amount, TransactionType.PAYMENT, description);
                 account.setBalance(account.getBalance() - amount);
                 paymentResponse.setTransaction(transactionRepository.save(transaction));
                 paymentResponse.setAccount(account);
+
             } else {
                 throw new InsufficientFundsException("Fondos insuficientes");
             }
