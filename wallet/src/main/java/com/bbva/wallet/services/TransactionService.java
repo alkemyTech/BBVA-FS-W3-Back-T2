@@ -52,16 +52,15 @@ public class TransactionService {
         var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
 
         if (receiverAccount.getCurrency() != Currency.ARS){
-            throw new Exception("no es una cuenta en Pesos");
+            throw new TransactionNotFoundAccountException("no es una cuenta en Pesos");
         }
 
-
         if (senderAccount.getUser() == receiverAccount.getUser()){
-            throw new Exception("no se puede enviar transactiones al mismo usuario");
+            throw new TransactionFailedForSameUserException("no se puede enviar transactiones al mismo usuario");
         }
 
         if (senderAccount.getBalance()<Receiver.getAmount()){
-            throw new Exception("saldo insuficiente");
+            throw new InsufficientFundsException("saldo insuficiente");
         }
 
         var Description = "transaction del cbu: "+senderAccount.getCbu()+ " al cbu: "+receiverAccount.getCbu();
@@ -108,16 +107,15 @@ public class TransactionService {
         var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
 
         if (receiverAccount.getCurrency() != Currency.USD){
-            throw new Exception("no es una cuenta en Pesos");
+            throw new TransactionNotFoundAccountException("no es una cuenta en dolares");
         }
 
-
         if (senderAccount.getUser() == receiverAccount.getUser()){
-            throw new Exception("no se puede enviar transactiones al mismo usuario");
+            throw new TransactionFailedForSameUserException("no se puede enviar transactiones al mismo usuario");
         }
 
         if (senderAccount.getBalance()<Receiver.getAmount()){
-            throw new Exception("saldo insuficiente");
+            throw new InsufficientFundsException("saldo insuficiente");
         }
 
         var Description = "transaction del cbu: "+senderAccount.getCbu()+ " al cbu: "+receiverAccount.getCbu();
