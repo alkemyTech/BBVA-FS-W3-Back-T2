@@ -187,5 +187,15 @@ public class AccountService {
         return pageAccountResponse;
     }
 
+    public Account cbuAuthenticateByCurrency(CbuAuthenticateRequest cbuAuthenticateRequest) {
+        Account byCbu = this.accountRepository.findByCbu(cbuAuthenticateRequest.getCbu());
+        if (byCbu != null) {
+            if (byCbu.getCurrency().equals(cbuAuthenticateRequest.getCurrency()) ) {
+                return byCbu;
+            }
+            throw new AccountNotFoundException("El tipo de cuenta no coincide");
+        }
+        throw new AccountNotFoundException("No existe una cuenta asociada a ese cbu");
+    }
 }
 

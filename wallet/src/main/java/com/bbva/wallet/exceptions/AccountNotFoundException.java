@@ -18,7 +18,9 @@ public class AccountNotFoundException extends RuntimeException{
         return currency;
     }
 
-
+    public AccountNotFoundException(String message) {
+        super(message);
+    }
 //@Getter
 //@Setter
 //@AllArgsConstructor

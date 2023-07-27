@@ -1,5 +1,6 @@
 package com.bbva.wallet.repositories;
 
+import com.bbva.wallet.dtos.CbuAuthenticateRequest;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.enums.Currency;
@@ -17,4 +18,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     List<Account> findByUser(User user);
     Optional<Account> findByUserAndCurrency(User user, Currency currency);
     Page<Account> findAll(Pageable pageable);
+
+    Account findByCbu(String cbu);
 }
