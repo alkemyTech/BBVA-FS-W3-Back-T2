@@ -13,6 +13,7 @@ import com.bbva.wallet.exceptions.*;
 import com.bbva.wallet.enums.Currency;
 import com.bbva.wallet.repositories.AccountRepository;
 import com.bbva.wallet.utils.CbuUtil;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -187,6 +188,7 @@ public class AccountService {
         return pageAccountResponse;
     }
 
+    @SneakyThrows
     public Account cbuAuthenticateByCurrency(CbuAuthenticateRequest cbuAuthenticateRequest) {
         Account byCbu = this.accountRepository.findByCbu(cbuAuthenticateRequest.getCbu());
         if (byCbu != null) {

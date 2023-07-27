@@ -86,11 +86,7 @@ public class AccountController {
 
     @PostMapping("authenticate/cbu")
     public ResponseEntity<?> authenticateCbu(@RequestBody CbuAuthenticateRequest cbuAuthenticateRequest) {
-        try {
             return new ResponseEntity<>(this.accountService.cbuAuthenticateByCurrency(cbuAuthenticateRequest), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
 }
