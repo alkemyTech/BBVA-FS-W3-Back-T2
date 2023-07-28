@@ -1,18 +1,20 @@
 package com.bbva.wallet.dtos;
 
-import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.Transaction;
 import com.bbva.wallet.enums.TransactionType;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Data
-public class TransactionDto {
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransactionResponseDTO {
     private Long id;
 
     double amount;
@@ -24,7 +26,7 @@ public class TransactionDto {
     @CreationTimestamp
     LocalDateTime creationDate;
 
-    public TransactionDto(Transaction transaction) {
+    public TransactionResponseDTO(Transaction transaction) {
         this.id = transaction.getId();
         this.amount = transaction.getAmount();
         this.name = transaction.getName();

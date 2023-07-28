@@ -30,10 +30,9 @@ import java.util.Collection;
 @CrossOrigin(origins = "*")
 public class TransactionController {
 
-    private final TransactionService transactionService;
-
-    private JwtService jwtService;
     private DepositService depositService;
+    private TransactionService transactionService;
+    private JwtService jwtService;
 
     private boolean isAdmin(Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -51,13 +50,14 @@ public class TransactionController {
 
         return isOwner;
     }
-    @PostMapping("/send_ars")
-    public ResponseEntity<?> transactionHandlersendArs(@RequestBody TransactionInputDto transactionInput, @RequestHeader("Authorization") String token) {
+
+    @PostMapping("/sendArs")
+    public ResponseEntity<?> transactionHandlersendArs(@RequestBody TransactionRequestDTO transactionInput, @RequestHeader("Authorization") String token) {
         try {
             var jwt = token.substring(7);
             var userEmail = jwtService.extractUserName(jwt);
-            transactionService.sendArs(userEmail,transactionInput);
-            return  new ResponseEntity<>("Transaccion exitosa", HttpStatus.OK);
+            Transaction transaction = transactionService.sendArs(userEmail, transactionInput);
+            return new ResponseEntity<>(new TransactionResponseDTO(transaction), HttpStatus.OK);
         } catch (ExpiredJwtException e) {
             return new ResponseEntity<>("Token expired", HttpStatus.UNAUTHORIZED);
         } catch (SignatureException e) {
@@ -72,13 +72,13 @@ public class TransactionController {
 
     }
 
-    @PostMapping("/send_usd")
-    public ResponseEntity<?> transactionHandlerSendUsd(@RequestBody TransactionInputDto transactionInput, @RequestHeader("Authorization") String token) {
+    @PostMapping("/sendUsd")
+    public ResponseEntity<?> transactionHandlerSendUsd(@RequestBody TransactionRequestDTO transactionInput, @RequestHeader("Authorization") String token) {
         try {
             var jwt = token.substring(7);
             var userEmail = jwtService.extractUserName(jwt);
-            transactionService.sendUsd(userEmail,transactionInput);
-            return  new ResponseEntity<>("Transaccion exitosa", HttpStatus.OK);
+            Transaction transaction = transactionService.sendUsd(userEmail, transactionInput);
+            return new ResponseEntity<>(new TransactionResponseDTO(transaction), HttpStatus.OK);
         } catch (ExpiredJwtException e) {
             return new ResponseEntity<>("Token expired", HttpStatus.UNAUTHORIZED);
         } catch (SignatureException e) {
@@ -90,8 +90,6 @@ public class TransactionController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Illegal argument", HttpStatus.UNAUTHORIZED);
         }
-
-
     }
 
     @PatchMapping("/{id}")
@@ -99,14 +97,15 @@ public class TransactionController {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok(transactionService.updateTransaction(user, id, updateTransactionRequest));
     }
+
     @PostMapping("/deposit")
-    public DepositResponse deposit(@RequestBody @Valid DepositRequest depositRequest, Authentication authentication){
+    public DepositResponse deposit(@RequestBody @Valid DepositRequest depositRequest, Authentication authentication) {
         return (depositService.deposit(depositRequest, authentication));
     }
 
     @GetMapping("/user/{userId}")
     @PreAuthorize("#userId == authentication.principal.id || hasAuthority('ADMIN')")
-    public ResponseEntity<?>  getTransactionsById (@PathVariable Long userId, Authentication authentication){
+    public ResponseEntity<?> getTransactionsById(@PathVariable Long userId, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         try {
             return new ResponseEntity<>(this.transactionService.getTransactionsById(userId, user.getEmail()), HttpStatus.OK);
@@ -143,12 +142,12 @@ public class TransactionController {
 
     }
 
-@GetMapping("")
-public PageTransactionResponse findAllUsers(@RequestParam(defaultValue = "0") int page) {
+    @GetMapping("")
+    public PageTransactionResponse findAllUsers(@RequestParam(defaultValue = "0") int page) {
         try {
-        return transactionService.findAllTransaction(page);
+            return transactionService.findAllTransaction(page);
         } catch (IllegalArgumentException e) {
-        throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
+            throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
         }
-        }
-        }
+    }
+}

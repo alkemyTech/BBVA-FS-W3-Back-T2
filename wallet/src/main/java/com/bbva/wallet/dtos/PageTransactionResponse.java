@@ -7,7 +7,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class PageTransactionResponse {
-    private List<TransactionDto> transactions;
+    private List<TransactionResponseDTO> transactions;
     private String previousPageUrl;
     private String nextPageUrl;
 }

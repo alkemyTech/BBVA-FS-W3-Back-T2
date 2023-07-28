@@ -12,5 +12,5 @@ import java.util.List;
 @Setter
 public class TransactionHistoryResponse {
     private Currency currency;
-    private List<TransactionDto> transactions;
+    private List<TransactionResponseDTO> transactions;
 }

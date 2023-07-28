@@ -1,5 +1,6 @@
 package com.bbva.wallet.exceptions;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -149,6 +150,31 @@ public class GlobalExceptionHandler {
         response.addError(ErrorCodes.INVALID_VALUE);
         response.setMessage(ex.getMessage());
         response.setData("id: " + String.valueOf(ex.getId()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Response<String>> handleExpiredJwtException(ExpiredJwtException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INVALID_VALUE);
+        response.setMessage(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+    @ExceptionHandler(TransactionNotFoundAccountException.class)
+    public ResponseEntity<Response<String>> handleTransactionNotFoundAccountException(TransactionNotFoundAccountException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.ACCOUNT_NOT_FOUND);
+        response.setMessage(ex.getMessage());
+        response.setData("cuentas no existe");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(TransactionFailedForSameUserException.class)
+    public ResponseEntity<Response<String>> handleTransactionFailedForSameUserException(TransactionFailedForSameUserException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.INVALID_VALUE);
+        response.setMessage(ex.getMessage());
+        response.setData("Transaccion Rechaza");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 }

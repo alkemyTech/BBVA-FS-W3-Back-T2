@@ -32,5 +32,4 @@ public class AccountNotFoundException extends RuntimeException{
 //        super(message);
 //        this.userId = id;
 //    }
-//
 }
