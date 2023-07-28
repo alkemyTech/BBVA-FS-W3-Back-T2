@@ -1,7 +1,6 @@
 package com.bbva.wallet.controllers;
 
-import com.bbva.wallet.dtos.PageAccountResponse;
-import com.bbva.wallet.dtos.UpdateAccountRequest;
+import com.bbva.wallet.dtos.*;
 import com.bbva.wallet.entities.Account;
 import com.bbva.wallet.entities.User;
 import com.bbva.wallet.exceptions.InvalidUrlRequestException;
@@ -10,13 +9,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import com.bbva.wallet.dtos.AccountCreationRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
-import com.bbva.wallet.dtos.AccountsBalanceResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,6 +82,11 @@ public class AccountController {
         } catch (IllegalArgumentException e) {
             throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
         }
+    }
+
+    @PostMapping("authenticate/cbu")
+    public ResponseEntity<?> authenticateCbu(@RequestBody CbuAuthenticateRequest cbuAuthenticateRequest) {
+            return new ResponseEntity<>(this.accountService.cbuAuthenticateByCurrency(cbuAuthenticateRequest), HttpStatus.OK);
     }
 
 }
