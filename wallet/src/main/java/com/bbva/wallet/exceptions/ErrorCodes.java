@@ -16,5 +16,6 @@ public enum ErrorCodes {
     INVALID_JWT_ARGUMENT,
     INVALID_URL_REQUEST,
     INSUFFICIENT_FUNDS,
+    NOT_EXISTENT_CBU
 }
 

@@ -177,5 +177,14 @@ public class GlobalExceptionHandler {
         response.setData("Transaccion Rechaza");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+
+    @ExceptionHandler(NotExistentCbuException.class)
+    public ResponseEntity<Response<String>> handleNotExistCbuException(NotExistentCbuException ex) {
+        Response<String> response = new Response<>();
+        response.addError(ErrorCodes.NOT_EXISTENT_CBU);
+        response.setMessage(ex.getMessage());
+        response.setData(ex.getCbu());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 }
 
