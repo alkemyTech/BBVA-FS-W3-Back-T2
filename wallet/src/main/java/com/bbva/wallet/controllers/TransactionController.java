@@ -12,6 +12,9 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,7 @@ import java.util.Collection;
 @RequestMapping("/transactions")
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
+@Tag(name = "Transaction API", description = "Endpoints for Transaction Management")
 public class TransactionController {
 
     private DepositService depositService;
@@ -37,22 +41,21 @@ public class TransactionController {
     private boolean isAdmin(Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-        boolean isAdmin = authorities.stream()
+        return authorities.stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
-
-        return isAdmin;
     }
 
     private boolean isTransactionOwner(Transaction transaction, String username) {
         String transactionOwner = String.valueOf(transaction.getAccount().getUser());
 
-        boolean isOwner = transactionOwner.equals(username);
-
-        return isOwner;
+        return transactionOwner.equals(username);
     }
 
+    @Operation(summary = "Send ARS", description = "Perform a transaction to send ARS.")
     @PostMapping("/sendArs")
-    public ResponseEntity<?> transactionHandlersendArs(@RequestBody TransactionRequestDTO transactionInput, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> transactionHandlersendArs(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Transaction details", required = true) @RequestBody TransactionRequestDTO transactionInput,
+            @RequestHeader("Authorization") String token){
         try {
             var jwt = token.substring(7);
             var userEmail = jwtService.extractUserName(jwt);
@@ -72,8 +75,11 @@ public class TransactionController {
 
     }
 
+    @Operation(summary = "Send USD", description = "Perform a transaction to send USD.")
     @PostMapping("/sendUsd")
-    public ResponseEntity<?> transactionHandlerSendUsd(@RequestBody TransactionRequestDTO transactionInput, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> transactionHandlerSendUsd(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Transaction details", required = true) @RequestBody TransactionRequestDTO transactionInput,
+            @RequestHeader("Authorization") String token) {
         try {
             var jwt = token.substring(7);
             var userEmail = jwtService.extractUserName(jwt);
@@ -92,20 +98,30 @@ public class TransactionController {
         }
     }
 
+    @Operation(summary = "Update Transaction", description = "Update transaction details by providing the transaction ID.")
     @PatchMapping("/{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody @Valid UpdateTransactionRequest updateTransactionRequest, Authentication authentication) {
+    public ResponseEntity<Transaction> updateTransaction(
+            @Parameter(description = "Transaction ID") @PathVariable Long id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Updated transaction details", required = true) @RequestBody @Valid UpdateTransactionRequest updateTransactionRequest,
+            Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok(transactionService.updateTransaction(user, id, updateTransactionRequest));
     }
 
+    @Operation(summary = "Deposit", description = "Perform a deposit.")
     @PostMapping("/deposit")
-    public DepositResponse deposit(@RequestBody @Valid DepositRequest depositRequest, Authentication authentication) {
+    public DepositResponse deposit(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Deposit details", required = true) @RequestBody @Valid DepositRequest depositRequest,
+            Authentication authentication){
         return (depositService.deposit(depositRequest, authentication));
     }
 
+    @Operation(summary = "Get Transactions by User ID", description = "Get transactions of a user by their ID.")
     @GetMapping("/user/{userId}")
     @PreAuthorize("#userId == authentication.principal.id || hasAuthority('ADMIN')")
-    public ResponseEntity<?> getTransactionsById(@PathVariable Long userId, Authentication authentication) {
+    public ResponseEntity<?> getTransactionsById(
+            @Parameter(description = "User ID") @PathVariable Long userId,
+            Authentication authentication){
         User user = (User) authentication.getPrincipal();
         try {
             return new ResponseEntity<>(this.transactionService.getTransactionsById(userId, user.getEmail()), HttpStatus.OK);
@@ -115,14 +131,19 @@ public class TransactionController {
 
     }
 
+    @Operation(summary = "Pay", description = "Perform a payment.")
     @PostMapping("/payment")
-    public ResponseEntity<PaymentResponse> pay(@RequestBody @Valid PaymentRequest paymentRequest, Authentication authentication) {
+    public ResponseEntity<PaymentResponse> pay(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Payment details", required = true) @RequestBody @Valid PaymentRequest paymentRequest,
+            Authentication authentication)  {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok(transactionService.pay(user, paymentRequest));
     }
 
+    @Operation(summary = "Get Transaction Detail", description = "Get transaction details by providing the transaction ID.")
     @GetMapping("/{id}")
-    public Transaction getTransactionDetail(@PathVariable Long id) {
+    public Transaction getTransactionDetail(
+            @Parameter(description = "Transaction ID") @PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
@@ -142,8 +163,10 @@ public class TransactionController {
 
     }
 
+    @Operation(summary = "Get All Transactions", description = "Get a list of all transactions.")
     @GetMapping("")
-    public PageTransactionResponse findAllUsers(@RequestParam(defaultValue = "0") int page) {
+    public PageTransactionResponse findAllUsers(
+            @Parameter(description = "Page number (default: 0)") @RequestParam(defaultValue = "0") int page) {
         try {
             return transactionService.findAllTransaction(page);
         } catch (IllegalArgumentException e) {
