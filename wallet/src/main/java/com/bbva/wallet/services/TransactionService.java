@@ -45,11 +45,14 @@ public class TransactionService {
     @SneakyThrows
     @Transactional
     public Transaction sendArs(String username, TransactionRequestDTO Receiver) {
-
+        Optional<Account> cbu = accountRepository.findById(Receiver.getCbu());
+        if(cbu.isEmpty())
+            throw new NotExistentCbuException("El CBU no existe.", Receiver.getCbu());
 
         var senderUser = userRepository.findByEmail(username).get();
         var senderAccount = accountRepository.findByUserAndCurrency(senderUser, Currency.ARS).get();
         var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
+
 
         if (receiverAccount.getCurrency() != Currency.ARS){
             throw new TransactionNotFoundAccountException("no es una cuenta en Pesos");
@@ -105,6 +108,11 @@ public class TransactionService {
         var senderUser = userRepository.findByEmail(username).get();
         var senderAccount = accountRepository.findByUserAndCurrency(senderUser, Currency.USD).get();
         var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
+        Optional<Account> cbu = accountRepository.findById(Receiver.getCbu());
+
+        if(cbu.isEmpty()) {
+            throw new NotExistentCbuException("El CBU no existe.", Receiver.getCbu());
+        }
 
         if (receiverAccount.getCurrency() != Currency.USD){
             throw new TransactionNotFoundAccountException("no es una cuenta en dolares");
