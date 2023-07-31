@@ -1,6 +1,38 @@
-# Proyecto Wallet
+# Alkywall
 
 Este proyecto es una aplicación que simula un sistema de gestión de billeteras electrónicas. Proporciona una API para crear y administrar usuarios, realizar transacciones y administrar saldos en diferentes monedas.
+
+## Documentación de la API con Swagger
+
+Este proyecto proporciona documentación de la API utilizando Swagger, lo que te permite explorar e interactuar con los diferentes endpoints de forma sencilla. Swagger UI ofrece una documentación interactiva que te permite probar los endpoints directamente desde el navegador.
+
+## Cómo acceder a la documentación de la API con Swagger
+
+Para acceder a la documentación de la API con Swagger, seguí estos pasos:
+
+1. Ejecuta la aplicación: asegurate de que el proyecto esté en funcionamiento.
+
+2. Abrí tu navegador web.
+
+3. Ingresa la URL de Swagger UI: en la barra de direcciones, escribe la siguiente URL: `http://localhost:8080/api/docs`
+
+4. Explorá la API: se mostrará la página de Swagger UI con una lista de los endpoints disponibles, sus descripciones, los parámetros de solicitud y ejemplos de respuestas. Podés explorar los endpoints, probarlos y ver las respuestas directamente desde Swagger UI.
+
+## Autenticación para la documentación de la API con Swagger
+
+La documentación de la API con Swagger está protegida con autenticación JWT (JSON Web Token). Para acceder a los endpoints protegidos a través de Swagger UI, tenés que proporcionar un token de autenticación. Seguí estos pasos para autenticarte:
+
+1. Obtené un token JWT: para obtener un token JWT válido, utiliza el endpoint `/auth/login` con las credenciales de un usuario válido. La respuesta va a incluir el token JWT, que vas a poder utilizar para la autenticación.
+
+2. Autenticate en Swagger UI: En la esquina superior derecha de la página de Swagger UI, hacé click en el botón "Authorize". Ingresa `"Bearer {tu_token_jwt}"` en el campo "Value" y clickeá en "Authorize".
+
+3. Accedé a los endpoints protegidos: después de una autenticación exitosa, vas a poder acceder a los endpoints protegidos y probarlos directamente desde Swagger UI.
+
+Tené en cuenta que, para los endpoints protegidos, debés incluir el token de autenticación en el encabezado de la solicitud con el formato `"Authorization: Bearer {tu_token_jwt}"`.
+
+## Detalles de la documentación de la API
+
+La documentación de la API ofrece información detallada sobre cada endpoint, incluidos los parámetros de entrada, los formatos de respuesta y posibles respuestas de error. También se incluyen ejemplos de solicitudes y respuestas para ayudarte a comprender cómo interactuar con la API de manera efectiva.
 
 ## Datos de prueba
 
