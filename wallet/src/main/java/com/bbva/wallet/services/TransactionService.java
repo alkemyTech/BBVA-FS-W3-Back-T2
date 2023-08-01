@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,6 +39,7 @@ public class TransactionService {
     private AccountRepository accountRepository;
 
     private RoleRepository roleRepository;
+
     public Transaction getTransactionById(Long id) {
         return transactionRepository.findById(id).orElse(null);
     }
@@ -46,7 +48,7 @@ public class TransactionService {
     @Transactional
     public Transaction sendArs(String username, TransactionRequestDTO Receiver) {
         Optional<Account> cbu = accountRepository.findById(Receiver.getCbu());
-        if(cbu.isEmpty())
+        if (cbu.isEmpty())
             throw new NotExistentCbuException("El CBU no existe.", Receiver.getCbu());
 
         var senderUser = userRepository.findByEmail(username).get();
@@ -54,19 +56,17 @@ public class TransactionService {
         var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
 
 
-        if (receiverAccount.getCurrency() != Currency.ARS){
-            throw new TransactionNotFoundAccountException("no es una cuenta en Pesos");
+        if (receiverAccount.getCurrency() != Currency.ARS) {
+            throw new TransactionNotFoundAccountException("No es una cuenta en pesos");
         }
 
-        if (senderAccount.getUser() == receiverAccount.getUser()){
-            throw new TransactionFailedForSameUserException("no se puede enviar transactiones al mismo usuario");
+        if (senderAccount.getUser() == receiverAccount.getUser()) {
+            throw new TransactionFailedForSameUserException("No se puede realizar transferencias al mismo usuario");
         }
 
-        if (senderAccount.getBalance()<Receiver.getAmount()){
-            throw new InsufficientFundsException("saldo insuficiente");
+        if (senderAccount.getBalance() < Receiver.getAmount()) {
+            throw new InsufficientFundsException("Saldo insuficiente");
         }
-
-        var Description = "transaction del cbu: "+senderAccount.getCbu()+ " al cbu: "+receiverAccount.getCbu();
 
         var payerTransaction = new Transaction();
 
@@ -75,7 +75,7 @@ public class TransactionService {
         payerTransaction.setUpdatedDate(LocalDateTime.now());
         payerTransaction.setName(TransactionType.PAYMENT);
         payerTransaction.setAccount(senderAccount);
-        payerTransaction.setDescription(Description);
+        payerTransaction.setDescription("Transferencia al cbu: " + receiverAccount.getCbu());
 
 
         var incomeTransaction = new Transaction();
@@ -85,14 +85,14 @@ public class TransactionService {
         incomeTransaction.setUpdatedDate(LocalDateTime.now());
         incomeTransaction.setName(TransactionType.INCOME);
         incomeTransaction.setAccount(receiverAccount);
-        incomeTransaction.setDescription(Description);
+        incomeTransaction.setDescription("Transferencia del cbu: " + senderAccount.getCbu());
 
         transactionRepository.save(payerTransaction);
         transactionRepository.save(incomeTransaction);
 
 
-        senderAccount.setBalance(senderAccount.getBalance()-Receiver.getAmount());
-        receiverAccount.setBalance(receiverAccount.getBalance()+Receiver.getAmount());
+        senderAccount.setBalance(senderAccount.getBalance() - Receiver.getAmount());
+        receiverAccount.setBalance(receiverAccount.getBalance() + Receiver.getAmount());
 
         accountRepository.save(senderAccount);
         accountRepository.save(receiverAccount);
@@ -110,23 +110,21 @@ public class TransactionService {
         var receiverAccount = accountRepository.findById(Receiver.getCbu()).get();
         Optional<Account> cbu = accountRepository.findById(Receiver.getCbu());
 
-        if(cbu.isEmpty()) {
+        if (cbu.isEmpty()) {
             throw new NotExistentCbuException("El CBU no existe.", Receiver.getCbu());
         }
 
-        if (receiverAccount.getCurrency() != Currency.USD){
-            throw new TransactionNotFoundAccountException("no es una cuenta en dolares");
+        if (receiverAccount.getCurrency() != Currency.USD) {
+            throw new TransactionNotFoundAccountException("No es una cuenta en dólares");
         }
 
-        if (senderAccount.getUser() == receiverAccount.getUser()){
-            throw new TransactionFailedForSameUserException("no se puede enviar transactiones al mismo usuario");
+        if (senderAccount.getUser() == receiverAccount.getUser()) {
+            throw new TransactionFailedForSameUserException("No se puede realizar transferencias al mismo usuario");
         }
 
-        if (senderAccount.getBalance()<Receiver.getAmount()){
-            throw new InsufficientFundsException("saldo insuficiente");
+        if (senderAccount.getBalance() < Receiver.getAmount()) {
+            throw new InsufficientFundsException("Saldo insuficiente");
         }
-
-        var Description = "transaction del cbu: "+senderAccount.getCbu()+ " al cbu: "+receiverAccount.getCbu();
 
         var payerTransaction = new Transaction();
 
@@ -135,8 +133,7 @@ public class TransactionService {
         payerTransaction.setUpdatedDate(LocalDateTime.now());
         payerTransaction.setName(TransactionType.PAYMENT);
         payerTransaction.setAccount(senderAccount);
-        payerTransaction.setDescription(Description);
-
+        payerTransaction.setDescription("Transferencia al cbu: " + receiverAccount.getCbu());
 
         var incomeTransaction = new Transaction();
 
@@ -145,13 +142,13 @@ public class TransactionService {
         incomeTransaction.setUpdatedDate(LocalDateTime.now());
         incomeTransaction.setName(TransactionType.INCOME);
         incomeTransaction.setAccount(receiverAccount);
-        incomeTransaction.setDescription(Description);
+        incomeTransaction.setDescription("Transferencia del cbu: " + senderAccount.getCbu());
 
         transactionRepository.save(payerTransaction);
         transactionRepository.save(incomeTransaction);
 
-        senderAccount.setBalance(senderAccount.getBalance()-Receiver.getAmount());
-        receiverAccount.setBalance(receiverAccount.getBalance()+Receiver.getAmount());
+        senderAccount.setBalance(senderAccount.getBalance() - Receiver.getAmount());
+        receiverAccount.setBalance(receiverAccount.getBalance() + Receiver.getAmount());
 
         accountRepository.save(senderAccount);
         accountRepository.save(receiverAccount);
@@ -237,10 +234,10 @@ public class TransactionService {
 
         //contenido de página
         Page<Transaction> transactionsPage = transactionRepository.findAll(pageable);
-        pageTransactionResponse.setTransactions(transactionsPage.getContent().stream().map(TransactionResponseDTO:: new).toList());
+        pageTransactionResponse.setTransactions(transactionsPage.getContent().stream().map(TransactionResponseDTO::new).toList());
 
         //valida que la página tenga contenido
-        if(pageTransactionResponse.getTransactions().size() == 0)
+        if (pageTransactionResponse.getTransactions().size() == 0)
             throw new InvalidUrlRequestException("La página buscada no se encuentra disponible.");
 
         //url de página siguiente

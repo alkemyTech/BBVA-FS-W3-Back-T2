@@ -48,7 +48,7 @@ public class TransactionSeeder implements CommandLineRunner, Ordered {
             Transaction transaction = Transaction.builder()
                     .amount(amount)
                     .name(transactionType)
-                    .description("Transaction " + (i + 1))
+                    .description("Transacción " + (i + 1))
                     .account(receiver)
                     .build();
 
