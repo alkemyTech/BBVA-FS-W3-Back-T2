@@ -189,11 +189,15 @@ public class AccountService {
     }
 
     @SneakyThrows
-    public Account cbuAuthenticateByCurrency(CbuAuthenticateRequest cbuAuthenticateRequest) {
+    public CbuAuthenticateResponse cbuAuthenticateByCurrency(CbuAuthenticateRequest cbuAuthenticateRequest) {
         Account byCbu = this.accountRepository.findByCbu(cbuAuthenticateRequest.getCbu());
         if (byCbu != null) {
             if (byCbu.getCurrency().equals(cbuAuthenticateRequest.getCurrency()) ) {
-                return byCbu;
+
+                CbuAuthenticateResponse response = new CbuAuthenticateResponse();
+                response.setCbu(byCbu.getCbu());
+                response.setUser(byCbu.getUser());
+                return response;
             }
             throw new AccountNotFoundException("El tipo de cuenta no coincide");
         }
