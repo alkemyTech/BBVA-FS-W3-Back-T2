@@ -32,6 +32,7 @@ public class UserService {
         return User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
+                .age(request.getAge())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .roleId(userRole)
